@@ -1,0 +1,395 @@
+﻿@model EstateProject.Dto.BuildingDto
+
+@using EstateProject.Dao
+
+
+
+@{
+    ViewBag.Title = "Danh sách tòa nhà";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">
+                    Trang chủ
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    Quản lý tòa nhà
+                </a>
+            </li>
+            <li class="active">
+                Danh sách tòa nhà
+            </li>
+        </ul>
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="widget-box ">
+                    <div class="widget-header">
+
+                        <h4 class="widget-title" style="font-family: VnBlack">Tìm kiếm </h4>
+                        <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div> <!-- widget-header -->
+                    <!-- search Buidling -->
+                    <form id="listFormBuilding" method="GET" action="@Url.Action("ListBuilding", "Building")">
+                        <div class="widget-body ">
+                            <div class="widget-main">
+                                <div class="form-horizontal">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label for="name">Tên tòa nhà </label>
+                                            <input type="text" class="form-control" id="name" name="name" value="@Model.name" />
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="buildingArea">Diện tích sàn </label>
+                                            <input type="number" id="buildingArea" class="form-control" name="floorarea" value="@{ if (@Model.floorarea != 0) {@Model.floorarea} }" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <label style="padding-bottom: -20px ;margin-right: 21px;"> Quận hiện có</label>
+                                            <select id="district" name="district" value="@Model.district">
+                                                <option value=""> -- Chọn quận -- </option>
+                                                <option value="Ba Đình">Ba Đình</option>
+                                                <option value="Bắc Từ Liêm">Bắc Từ Liêm</option>
+                                                <option value="Cầu Giấy">Cầu Giấy</option>
+                                                <option value="Đống Đa">Đống Đa</option>
+                                                <option value="Hà Đông">Hà Đông</option>
+                                                <option value="Cầu Giấy">Cầu Giấy</option>
+                                                <option value="Hai Bà Trưng">Hai Bà Trưng</option>
+                                                <option value="Hoàn Kiếm">Hoàn Kiếm</option>
+                                                <option value="Hoàng Mai">Hoàng Mai</option>
+                                                <option value="Long Biên">Long Biên</option>
+                                                <option value="Nam Từ Liêm">Nam Từ Liêm</option>
+                                                <option value="Tây Hồ">Tây Hồ</option>
+                                                <option value="Thanh Xuân">Thanh Xuân</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="ward">Phường </label>
+                                            <input type="text" class="form-control" id="ward" name="ward" value="@Model.ward" />
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="street">Đường </label>
+                                            <input type="text" class="form-control" id="street" name="street" value="@Model.street" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label for="numberOfBaseMent">Số tầng hầm</label>
+                                            <input type="number" id="numberOfBasement" class="form-control" name="numberOfBasement" value="@{ if (@Model.numberofbasement != 0) {@Model.numberofbasement} }" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="direction">Hướng </label>
+                                            <input type="text" class="form-control" id="direction" name="direction" value="@Model.direction" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="level">Hạng </label>
+                                            <input class="form-control" id="level" name="level" value="@Model.levels" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <label for="areaRentFrom">Diện tích từ </label>
+                                            <input type="number" id="areaRentFrom" class="form-control" name="areaRentFrom" value="@{ if (@Model.areaRentFrom != 0) {@Model.areaRentFrom} }" />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label for="areaRentTo">Diện tích đến </label>
+                                            <input type="number" id="areaRentTo" class="form-control" name="areaRentTo" value="@{ if (@Model.areaRentTo != 0) {@Model.areaRentTo} }" />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label for="costRentFrom">Giá thuê từ</label>
+                                            <input type="number" id="costRentFrom" class="form-control" name="costRentFrom" value="@{ if (@Model.costRentFrom != 0) {@Model.costRentFrom} }" />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label for="costRentTo">Giá thuê đến </label>
+                                            <input type="number" id="costRentTo" class="form-control" name="costRentTo" value="@{ if (@Model.costRentTo != 0) {@Model.costRentTo} }" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        @{if (Session["Role"].Equals("ADMIN"))
+                                            {
+                                                <!-- If role equal MANAGER -->
+                                                <div class="col-sm-4">
+
+                                                    <label for="UserId" style="width:450px"> Nhân viên phụ trách</label>
+                                                    @Html.DropDownList("UserId", (IEnumerable<SelectListItem>)ViewBag.UserID, " -- Chọn nhân viên ---", new { @style = "width: 230px;" })
+
+
+
+                                                </div>
+                                            }
+                                        }
+                                        <div class="col-sm-6">
+                                            <label> Loại tòa nhà</label>
+                                            <li style="list-style: none;">
+                                                <input type="checkbox" name="buildingTypes" value="TANG_TRET" /> <label> Tầng Trệt </label>
+                                                <input type="checkbox" name="buildingTypes" value="NOI_THAT" /> <label> Nội Thất </label>
+                                                <input type="checkbox" name="buildingTypes" value="NGUYEN_CAN" /> <label> Nguyên Căn </label>
+                                            </li>
+                                        </div>
+                                        <div class="col-sm=2">
+                                            <button type="button" style=" border: thick;  padding: 5px 15px; margin-left: 14px;margin-top:21px;" class="bnt btn-success" id="btnSearch"> Tìm kiếm <i class="fa fa-arrow-right"></i></button>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div> <!-- widget-main -->
+                        </div> <!-- widget-body  and search Building-->
+                        <input type="hidden" value="1" id="page" name="page" />
+                        <input type="hidden" id="limit" name="limit" value="@Model.limit" />
+                    </form>
+                </div> <!-- widget-box -->
+                <div class="table-btn-controls">
+
+
+                    @{if (Session["Role"].Equals("ADMIN"))
+                        {
+                            <div class="pull-right tableTools-container" style=" margin-top: 8px;">
+                                <div class="dt-buttons btn-overlap btn-group">
+                                    <a flag="info" href="@Url.Action("EditBuilding", "Building")"
+                                       class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip"
+                                       title='Thêm bài viết'>
+                                        <span>
+                                            <i class="fa fa-plus-circle bigger-110 purple"></i>
+                                        </span>
+                                    </a>
+                                    <button id="btnDelete" type="button" style="margin-left: 6px;" disabled
+                                            class="dt-button buttons-html5 btn btn-white btn-primary btn-bold" onclick="warningBeforeDelete()" data-toggle="tooltip" title='Xóa bài viết'>
+                                        <span>
+                                            <i class="fa fa-trash-o bigger-110 pink"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        }
+
+                    }
+
+                </div>  <!-- delete and create-->
+                <br />
+
+
+                <!-- buidling list-->
+                <div class="row full-details">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12" >
+                                <div class="table-responsive">
+                                    <table id="buildingList" class="table  table-bordered ">
+                                        <thead>
+                                            <tr style="font-family: VnBlack ; font-weight: bold; color: #000000;">
+                                                <th><input type="checkbox" id="checkAll" value="#" /></th>
+                                                <th>Ngày </th>
+                                                <th>Tên tòa nhà</th>
+                                                <th>Địa chỉ</th>
+                                                <th>Tên quản lý</th>
+                                                <th>Số điện thoại</th>
+                                                <th>D.T sàn</th>
+                                                <th>Giá thuê </th>
+                                                <th>Phí dịch vụ</th>
+                                                <th>Phí MG</th>
+                                                <th>Thao tác</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                foreach (var item in ViewBag.ListBuildings)
+                                                {
+
+                                                    var userDao = new UserDao();
+                                                    var user = userDao.FindById(item.UserId);
+
+
+                                                    var address = @item.street + ", " + @item.ward + ", " + @item.district;
+
+                                                    <tr>
+                                                        <td> <input type="checkbox" id="checkbox_@item.id" value="@item.id" /></td>
+                                                        <td> @item.createddate</td>
+                                                        <td> @item.name</td>
+                                                        <td> @address</td>
+                                                        <td> @user.fullname </td>
+                                                        <td> @user.phone </td>
+                                                        <td> @item.floorarea</td>
+                                                        <td> @item.rentprice</td>
+                                                        <td> @item.servicefee</td>
+                                                        <td> @item.brokeragetee</td>
+                                                        <td>
+
+                                                            <a class="btn btn-xs btn-primary " data-toggle="tooltip" title="Cập nhật bài viết"
+                                                               href="/Building/EditBuilding/@item.id">
+                                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                            </a>
+
+                                                            <a class="btn btn-xs btn-primary " data-toggle="tooltip" title="Thông tin tòa nhà "
+                                                               href="/Building/DetailBuilding/@item.id">
+                                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                                            </a>
+                                                        </td>
+
+                                                    </tr>
+                                                }
+                                            }
+
+
+                                        </tbody>
+                                    </table> <!-- table-->
+                                    <!-- paginantion -->
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div> <!-- building-list-->
+                <!-- reponsive -->
+                 
+                <div class="less-details" style="margin-top:50px;">
+
+
+
+                    @{
+                        foreach (var item in ViewBag.ListBuildings)
+                        {
+
+                            var userDao = new UserDao();
+                            var user = userDao.FindById(item.UserId);
+                            var address = @item.street + ", " + @item.ward + ", " + @item.district;
+                            var baseurl = Request.Url.Scheme + "://" + Request.Url.Host + ":" + Request.Url.Port + Url.Content("~/Assets/Upload/Building/");
+                            var imageSrc = baseurl + item.avatar;
+
+                                        <div class="row">
+                                            <div class="col-sm-12" style="width:100%">
+                                                <img src="@imageSrc" id="fileImage" alt="Ảnh đại diện" style="width: 120px; height: 120px; float: left; margin-bottom: 15px; margin-right: 15px;" />
+                                                <div style="font-family: VnBlack; font-weight: bold; color: #000000; float: left;" >
+                                                    <h6>@item.name</h6>
+                                                    <h6>@address</h6>
+                                                    <h6>@item.rentprice</h6>
+                                                    <h6> @user.fullname</h6>
+                                                    <h6> @user.phone</h6>
+                                                </div>
+                                                <div style="float:right;">
+                                                    <a class="btn btn-xs btn-primary " data-toggle="tooltip" title="Cập nhật bài viết"
+                                                       href="/Building/EditBuilding/@item.id">
+                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                    </a>
+
+                                                    <a class="btn btn-xs btn-primary " data-toggle="tooltip" title="Thông tin tòa nhà "
+                                                       href="/Building/DetailBuilding/@item.id">
+                                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                                    </a>
+                                                    <input type="checkbox" id="checkbox_@item.id" value="@item.id" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                               }
+                         }
+                    </div> <!-- building-list-reponsive-->
+
+                <!-- paginantion -->
+                <ul class="pagination" id="pagination"></ul>
+            </div> <!-- col-xs-12 -->
+        </div> <!-- end row-->
+
+    </div> <!-- page-content-->
+
+</div>	<!--main-content-inner -->
+
+
+
+@section scripts {
+    <script type="text/javascript">
+
+
+
+        /* pagination */
+
+        let totalPages = @Model.totalPage;
+        let currentPage = @Model.page;
+        $(function () {
+            window.pagObj = $('#pagination').twbsPagination({
+                totalPages: totalPages,
+                visiblePages: 5,
+                startPage: currentPage,
+                onPageClick: function (event, page) {
+                    if (currentPage != page) {
+                        $('#page').val(page);
+                        $('#limit').val(5);
+                        $('#listFormBuilding').submit();
+                    }
+                    console.info(page + ' (from options)');
+                }
+            })
+        });
+
+        var homeConfig = { pageSize: 5, pageIndex: 1 }
+
+        /* search */
+        $('#btnSearch').click(function (e) {
+            e.preventDefault();
+            $('#listFormBuilding').submit();
+        })
+
+
+        /* delete */
+
+        function warningBeforeDelete() {
+            showAlertBeforeDelete(function () {
+                event.preventDefault();
+                let dataArray = $('tbody input[type=checkbox]:checked').map(function () {
+                    return $(this).val();
+                }).get();
+                deleteBuilder(dataArray);
+            });
+        }
+        function deleteBuilder(data) {
+            $.ajax({
+                url: '/Building/Delete',
+                type: 'DELETE',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function () {
+                    swal("Deleted!", "The building has been deleted.", "success").then((result) => {
+                        if (result.value) {
+                            window.location.reload();
+                        }
+                    });
+                },
+                error: function () {
+                    swal("Error", "Could not be deleted! :)", "error");
+                }
+            });
+        }
+
+    </script>
+}

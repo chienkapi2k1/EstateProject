@@ -1,0 +1,237 @@
+﻿@model List<EstateProject.Models.user>
+
+@{
+    ViewBag.Title = "Danh sách tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="../index1.html">
+                    Trang chủ
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    Quản lý tài khoản
+                </a>
+            </li>
+            <li class="active">
+                Danh sách người dùng
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="widget-box table-filter">
+                            <div class="widget-header">
+                                <h4 class="widget-title" style="font-family: VnBlack">
+                                    Search
+                                </h4>
+                                <div class="widget-toolbar">
+                                    <a href="#" data-action="collapse">
+                                        <i class="ace-icon fa fa-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <form id="listFormUser" method="get" action="@Url.Action("ListUser","User")">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">
+                                                    Username
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <div class="fg-line">
+                                                        <input type="text" id="search" value="@if(ViewBag.Search != null){@ViewBag.Search;}" name="search" class="form-control input-sm" placeholder="Please enter username" />
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label"></label>
+                                                <div class="col-sm-8">
+                                                    <button id="btnSearchUser" type="submit"
+                                                            class="btn btn-sm btn-success">
+                                                        Search
+                                                        <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <br>
+                        <div class="table-btn-controls">
+                            <div class="pull-right tableTools-container">
+                                <div class="dt-buttons btn-overlap btn-group">
+                                    <a flag="info" href="@Url.Action("EditUser", "User")"
+                                       class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"
+                                       data-toggle="tooltip"
+                                       title="Thêm người dùng"
+                                       style="margin-right: 8px;">
+                                        <span>
+                                            <i class="fa fa-plus-circle bigger-110 purple"></i>
+                                        </span>
+                                    </a>
+                                    <button id="btnDelete" type="button"
+                                            class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
+                                            data-toggle="tooltip"
+                                            title="Xóa bài viết" onclick="warningBeforeDeleteUser()">
+                                        <span>
+                                            <i class="fa fa-trash-o bigger-110 pink"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table id="buildingList" class="table  table-bordered ">
+                                <thead>
+                                    <tr style="font-family: VnBlack ; font-weight: bold; color: #000000;">
+                                        <th><input type="checkbox" id="checkAll" value="#" /></th>
+                                        <th>Tên đăng nhập </th>
+                                        <th>Tên đầy đủ</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        @*<th>Thao tác</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (var item in Model)
+                                        {
+                                            <tr data-id="@item.id" class="id_user">
+                                                <td>
+
+                                                    @{
+                                                        if (item.role != "ADMIN" && item.id != int.Parse(Session["UserId"].ToString()))
+                                                        {
+                                                            <input type="checkbox" id="checkbox0" />
+                                                        }
+                                                    }
+                                                </td>
+                                                <td> @item.username</td>
+                                                <td> @item.fullname</td>
+                                                <td> @item.phone</td>
+                                                <td> @item.email</td>
+                                                <td> @item.role</td>
+                                                @*<td>
+                                                        @{
+                                                            if (item.role != "ADMIN" && item.id != int.Parse(Session["UserId"].ToString()))
+                                                            { <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
+                                                                 title="Cập nhật người dùng"
+                                                                 href="#">
+                                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                                </a>
+                                                            }
+                                                        }
+
+                                                    </td>*@
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table> <!-- table-->
+                            <ul class="pagination" id="pagination"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("#btnDelete").click(function () {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Are you want to delete record?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var arr = [];
+                        console.log($('input:checked'));
+                        $.each($('input:checked'), function () {
+                            arr.push($(this).closest('.id_user').attr('data-id'));
+                        });
+
+                        $.ajax({
+                            url: '@Url.Action("DeleteUser","User")', //
+                            type: 'delete',
+                            data: { 'data': arr },
+                            success: function (response) {
+                                console.log(response);
+                                if (response.Status == 1) {
+                                    var data = response.data;
+                                    for (var i = 0; i < data.length; i++) {
+                                        $(`tr[data-id=${data[i]}]`).remove();
+                                    }
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Your record has been deleted.',
+                                        'success'
+                                    )
+                                } else {
+                                    Swal.fire(
+                                        'Oops...',
+                                        'Please choose record you want to delete!',
+                                        'error'
+                                    )
+                                }
+                            },
+                            error: function (response) {
+                                console.log(response);
+
+
+                            }
+                        });
+
+
+                    }
+                })
+
+            })
+        });
+    </script>
+
+}
+
+
+

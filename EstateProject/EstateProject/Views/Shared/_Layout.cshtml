@@ -1,0 +1,406 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    @Styles.Render("~/css/base")
+
+    <link rel="stylesheet"
+          href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="//cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+    @Scripts.Render("~/js/base")
+    @Scripts.Render("~/js/paging")
+    @{
+        var baseurl = Request.Url.Scheme + "://" + Request.Url.Host + ":" + Request.Url.Port + Url.Content("~");
+    }
+    <script>
+        var baseurl = "@baseurl";
+    </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .form-horizontal {
+            font-family: VnBlack;
+        }
+
+            .form-horizontal label {
+                font-family: VnBlack;
+                font-weight: 700;
+            }
+
+            .form-horizontal input {
+                height: 28px;
+                margin-bottom: 10px;
+            }
+
+                .form-horizontal input[type ="checkbox"] {
+                    height: auto;
+                }
+
+        td > th {
+            font-family: VnBlack;
+            font-weight: 700;
+        }
+
+        .swal2-icon {
+            font-size: 1.5em !important;
+        }
+
+        .form-group {
+            margin-bottom: 0px;
+        }
+
+        label.error {
+            color: #ff0500;
+            margin-left: 12px;
+        }
+
+        .invalid-feedback {
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .image_container {
+            height: 120px;
+            width: 200px;
+            overflow: hidden;
+            margin-top: 10px;
+            margin-left: 10px;
+            margin-bottom: 6px;
+        }
+
+            .image_container img {
+                height: 100%;
+                width: auto;
+                object-fit: cover;
+            }
+
+            .image_container span {
+                top: -6px;
+                right: 8px;
+                color: red;
+                font-size: 28px;
+                font-weight: normal;
+                cursor: pointer;
+            }
+
+        #mapCanvas {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+
+    @RenderSection("css", required: false)
+</head>
+<body class="no-skin">
+    <!-- header -->
+    <div id="navbar" class="navbar navbar-default ace-save-state">
+        <div class="navbar-container ace-save-state" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="#" class="navbar-brand">
+                    <small>
+                        <i class="fa fa-leaf"></i>
+                        Trang quản trị
+                    </small>
+                </a>
+            </div>
+            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            Xin chào, <b>
+                                @{if (Session["FullName"] != null)
+                                    { @Session["FullName"].ToString() }
+                                }
+                            </b>
+                            <i class="ace-icon fa fa-caret-down"></i>
+                        </a>
+
+                        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="@Url.Action("Profile", "User")">
+                                    <i class="ace-icon fa fa-user"></i>
+                                    Thông tin tài khoản
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("ChangePassWord", "User")">
+                                    <i class="ace-icon fa fa-key"></i>
+                                    Đổi mật khẩu
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="@Url.Action("Logout", "Login")">
+                                    <i class="ace-icon fa fa-power-off"></i>
+                                    Thoát
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <!-- header -->
+
+    <div class="main-container" id="main-container">
+
+        <script type="text/javascript">
+            try {
+                ace.settings.check('main-container', 'fixed')
+            } catch (e) {
+            }
+        </script>
+        <!-- menu -->
+        <div id="sidebar" class="sidebar  responsive  ace-save-state">
+            <script type="text/javascript">
+                try { ace.settings.loadState('sidebar') } catch (e) { }
+            </script>
+            <div class="sidebar-shortcuts">
+                <div class="sidebar-shortcuts-large">
+                    <button class="btn btn-success">
+                        <i class="ace-icon fa fa-signal"></i>
+                    </button>
+
+                    <button class="btn btn-info">
+                        <i class="ace-icon fa fa-pencil"></i>
+                    </button>
+
+                    <button class="btn btn-warning">
+                        <i class="ace-icon fa fa-users"></i>
+                    </button>
+
+                    <button class="btn btn-danger">
+                        <i class="ace-icon fa fa-cogs"></i>
+                    </button>
+                </div>
+                <div class="sidebar-shortcuts-mini">
+                    <span class="btn btn-success"></span>
+
+                    <span class="btn btn-info"></span>
+
+                    <span class="btn btn-warning"></span>
+
+                    <span class="btn btn-danger"></span>
+                </div>
+            </div>
+            <ul class="nav nav-list">
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-list"></i>
+                        <span class="menu-text">QL tòa nhà</span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="@Url.Action("ListBuilding", "Building")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                DS tòa nhà
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="@Url.Action("MyListBuilding", "Building")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                DS sản phẩm ưu tiên
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-building"></i>
+                        <span class="menu-text">QL tòa nhà ưu tiên</span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="@Url.Action("MyListBuilding", "Building")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                DS sản phẩm ưu tiên
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+                <li class="">
+                    @{
+                        if (Session["Role"].ToString() == "ADMIN")
+                        {
+                            <a href="#" class="dropdown-toggle">
+                                <i class="menu-icon fa fas fa-users"></i>
+                                <span class="menu-text">QL tài khoản</span>
+                                <b class="arrow fa fa-angle-down"></b>
+                            </a>
+                        }
+                    }
+
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="@Url.Action("ListUser", "User")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                DS tài khoản
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fas fa-user"></i>
+                        <span class="menu-text">QL Liên Hệ</span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="@Url.Action("ListContact", "Contact")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                DS Liên Hệ
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+
+                @*<li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fas fa-gears"></i>
+                            <span class="menu-text">QL cấu hình</span>
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+                        <b class="arrow"></b>
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="@Url.Action("Setting", "Setting")">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Cài đặt cấu hình
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        </ul>
+                    </li>*@
+            </ul>
+
+            <div class="sidebar-toggle sidebar-collapse">
+                <i class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+            </div>
+        </div>
+
+        <!-- menu -->
+        <!-- body -->
+        <div class="main-content">
+
+            @RenderBody()
+
+        </div>
+
+        <!-- footer -->
+        <div class="footer">
+            <div class="footer-inner">
+                <div class="footer-content">
+                    <span class="bigger-120">
+                        <span class="blue bolder">estate.com</span>
+                    </span>
+
+                    &nbsp; &nbsp;
+                    <span class="action-buttons">
+                        <a href="#">
+                            <i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+                        </a>
+
+                        <a href="#">
+                            <i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
+                        </a>
+
+                        <a href="#">
+                            <i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- footer -->
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+            <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+        </a>
+
+    </div>
+
+
+
+
+    @Scripts.Render("~/js/plugins")
+    <script type="text/javascript">
+        $('.back').click(function () {
+            window.location = baseurl;
+        });
+
+        function showAlertBeforeDelete(callback) {
+            Swal.fire({
+                title: "Xác nhận xóa",
+                text: "Bạn có chắc chắn xóa những dòng đã chọn",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy bỏ",
+                confirmButtonClass: "btn btn-success",
+                cancelButtonClass: "btn btn-danger"
+            }).then(function (res) {
+                if (res.value) {
+                    callback();
+                } else if (res.dismiss == 'cancel') {
+                    console.log('cancel');
+                }
+            });
+        }
+
+
+        function showAlertBeforeAdd(callback) {
+            Swal.fire({
+                title: 'Xác nhận lưu',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                denyButtonText: `Hủy bỏ `,
+            }).then(function (res) {
+                if (res.value) {
+                    callback();
+                } else if (res.dismiss == 'cancel') {
+                    console.log('cancel');
+                }
+            });
+        }
+        function showAlertBeforeUpdate(callback) {
+            Swal.fire({
+                title: 'Xác nhận chỉnh sửa',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                denyButtonText: `Hủy bỏ`,
+            }).then(function (res) {
+                if (res.value) {
+                    callback();
+                } else if (res.dismiss == 'cancel') {
+                    console.log('cancel');
+                }
+            });
+        }
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

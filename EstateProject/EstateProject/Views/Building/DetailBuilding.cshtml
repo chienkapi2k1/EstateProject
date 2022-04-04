@@ -1,0 +1,215 @@
+﻿@model EstateProject.Dto.BuildingDto
+@{
+    ViewBag.Title = "Thông Tin Chi Tiết Tòa Nhà";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="../index1.html">
+                    Trang chủ
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    Quản lý tòa nhà
+                </a>
+            </li>
+            <li class="active">
+                Thông tin tòa nhà
+            </li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="table-responsive">
+                            <table id="buildingList" class="table  table-bordered table-striped ">
+                                <thead>
+                                    <tr style="font-family: VnBlack ; font-weight: bold; color: #000000;">
+                                        <th style="width: 200px;">Danh mục </th>
+                                        <th>Thông tin </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Tên tòa nhà </td>
+                                        <td>@Model.name</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Quận  </td>
+                                        <td>@Model.district</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phường </td>
+                                        <td>@Model.ward</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Đường  </td>
+                                        <td>@Model.street</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Kết cấu </td>
+                                        <td>@Model.structure</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Số tầng hầm  </td>
+                                        <td>@Model.numberofbasement</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Diện tích sàn </td>
+                                        <td>@Model.floorarea</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Hướng   </td>
+                                        <td>@Model.direction</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Hạng </td>
+                                        <td>@Model.levels</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Diện tích thuê </td>
+                                        <td>@Model.rentareas</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Mô tả diện tích  </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Giá thuê </td>
+                                        <td>@Model.rentprice</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Mô tả giá </td>
+                                        <td>@Model.rentpricedescription</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Phí ô tô </td>
+                                        <td>@Model.carfee</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Phí mô tô </td>
+                                        <td>@Model.motofee</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Phí ngoài giờ </td>
+                                        <td>@Model.overtimefee</td>
+                                    </tr>
+                                    <tr>
+                                        @{
+
+                                            var check1 = "";
+                                            var check2 = "";
+                                            var check3 = "";
+                                            if (Model.buildingTypes != null)
+                                            {
+
+                                                foreach (var type in Model.buildingTypes)
+                                                {
+                                                    if (type.Equals("TANG_TRET"))
+                                                    {
+                                                        check1 += "checked";
+                                                    }
+                                                    else if (type.Equals("NOI_THAT"))
+                                                    {
+                                                        check2 += "checked";
+                                                    }
+                                                    else if (type.Equals("NGUYEN_CAN"))
+                                                    {
+                                                        check3 += "checked";
+                                                    }
+
+                                                }
+                                            }
+
+
+                                        }
+                                        <td scope="row">Loại tòa nhà : </td>
+                                        <td>
+                                            <li>
+                                                <input type="checkbox"  @check1 /> <label> Tầng Trệt </label>
+                                                <input type="checkbox" @check2 /> <label> Nội Thất </label>
+                                                <input type="checkbox"  @check3 /> <label> Nguyên Căn </label>
+                                            </li>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table> <!-- table-->
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        @{
+                            var baseurl = Request.Url.Scheme + "://" + Request.Url.Host + ":" + Request.Url.Port + Url.Content("~/Assets/Upload/Building/");
+                            var imageSrc = "";
+                            if (Model.avatar != null)
+                            {
+                                var ok = Model.avatar;
+                                imageSrc = baseurl + ok;
+                            }
+                        }
+
+                        <img src="@imageSrc" alt="Ảnh đại diện" style="width: 300px; height: 300px;" />
+                        <hr>
+                        <h6 style="font-family: VnBlack ; font-weight: bold; color: #000000;">Ghi chú </h6>
+                        <p>Ghi chú sẽ được thêm vào sau </p>
+                    </div>
+                    <div class="col-sm-5" id="map">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+
+    @*<script src="~/Assets/Admin/map/contact.js"></script>*@
+    <script>
+        function initMap() {
+            const uluru = { lat: -25.363, lng: 131.044 };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 4,
+                center: uluru,
+            });
+
+            const contentString = "Hello";
+
+            const infowindow = new google.maps.InfoWindow({
+                content: contentString,
+            });
+            const marker = new google.maps.Marker({
+                position: uluru,
+                map,
+                title: "Uluru (Ayers Rock)",
+            });
+
+            marker.addListener("click", () => {
+                infowindow.open({
+                    anchor: marker,
+                    map,
+                    shouldFocus: false,
+                });
+            });
+        }
+
+    </script>
+   
+    
+}

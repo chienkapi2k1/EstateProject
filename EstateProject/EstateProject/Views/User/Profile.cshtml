@@ -1,0 +1,107 @@
+﻿@model EstateProject.Models.user
+@{
+    ViewBag.Title = "Thông tin tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (TempData["OK"] != null)
+    {
+        <script type="text/javascript">
+        Swal.fire(
+            'Successful!!',
+            "@((string)TempData["OK"])",
+            "success"
+        )
+        </script>
+    }
+}
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a>
+                    Trang chủ
+                </a>
+            </li>
+            <li class="active">Thông tin tài khoản </li>
+        </ul><!-- /.breadcrumb -->
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <form id="formEditProfile" class="form-horizontal" method="post" enctype="multipart/form-data" action="@Url.Action("profile", "User")">
+                    <div id="profile">
+                        <div class="space-4"></div>
+
+                        <div class="space-4"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="fullName">Tên đầy đủ</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="fullName" name="fullname" value="@{ if (@Model.fullname != null) {@Model.fullname} }" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="email">Email</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="email" name="email" value="@{ if (@Model.email != null) {@Model.email} }" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="phoneNumber">Số điện thoại </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="phone" name="phone" value="@{ if (@Model.phone != null) {@Model.phone} }" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="thumbnail">Ảnh đại diện</label>
+                            <div class="col-sm-4">
+                                <input style="margin-top: 6px;" type="file" id="imageFile" name="imageFile" @*accept="image/png, image/jpeg, image/jpg"*@ placeholder="thumbnail">
+                            </div>
+                            <div class="col-sm-5">
+                                @{
+                                    var baseurl = Request.Url.Scheme + "://" + Request.Url.Host + ":" + Request.Url.Port + Url.Content("~");
+                                    var imageSrc = "";
+                                    if (Model.image != null)
+                                    {
+                                        var ok = Model.image;
+                                        imageSrc = baseurl + ok;
+                                    }
+                                }
+                                <img src="@imageSrc" id="fileImage" alt="Ảnh đại diện" style="width: 300px; height: 400px;" />
+                            </div>
+
+                        </div>
+                        <div class="space-4"></div>
+
+                        <div class="clearfix form-actions">
+                            <div class="col-md-offset-3 col-md-9">
+                                <div>
+                                    <button class="btn btn-info" type="submit" id="btnUpdateProfile">
+                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                        Cập nhật người dùng
+                                    </button>
+                                </div>
+
+                                <button class="btn back" type="reset" onclick="history.back();" style="margin-left: 200px;   margin-top: -64px;">
+                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                    Hủy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="userId" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "Danh sách tòa nhà ưu tiên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch (e) {
+                    }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="../index1.html">
+                    Trang chủ
+                </a>
+            </li>
+            <li class="active">
+                Danh sách tòa nhà ưu tiên
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <!-- PAGE CONTENT BEGINS -->
+
+                <div class="table-btn-controls">
+                    <div class="pull-right tableTools-container" style=" margin-top: 8px;">
+                        <div class="dt-buttons btn-overlap btn-group">
+                            <button id="btnDelete" type="button" style="margin-left: 6px;" disabled
+                                    class="dt-button buttons-html5 btn btn-white btn-primary btn-bold" onclick="warningBeforeDelete()" data-toggle="tooltip" title='Xóa bài viết'>
+                                <span>
+                                    <i class="fa fa-trash-o bigger-110 pink"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>  <!-- delete and create-->
+                <br />
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table id="buildingList" class="table  table-bordered ">
+                                <thead>
+                                    <tr style="font-family: VnBlack ; font-weight: bold; color: #000000;">
+                                        <th><input type="checkbox" id="checkAll" value="#" /></th>
+                                        <th>Ngày </th>
+                                        <th>Tên tòa nhà</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Tên quản lý</th>
+                                        <th>Số điện thoại</th>
+                                        <th>D.T sàn</th>
+                                        <th>D.T trống </th>
+                                        <th>Giá thuê </th>
+                                        <th>Phí dịch vụ</th>
+                                        <th>Phí MG</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> <input type="checkbox" id="checkbox_0" /></td>
+                                        <td>createdDate </td>
+                                        <td> name</td>
+                                        <td>address</td>
+                                        <td>managerName</td>
+                                        <td>managerPhone</td>
+                                        <td>buildingArea</td>
+                                        <td>emptyArea</td>
+                                        <td>rentPrice</td>
+                                        <td>serviceCost</td>
+                                        <td>brokerageFee</td>
+                                        <td>
+                                            <a class="btn btn-xs btn-primary " data-toggle="tooltip"
+                                               title="Thông tin tòa nhà " href="#" /><i class="fa fa-eye" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td> <input type="checkbox" id="checkbox_1" /></td>
+                                        <td>createdDate </td>
+                                        <td> name</td>
+                                        <td>address</td>
+                                        <td>managerName</td>
+                                        <td>managerPhone</td>
+                                        <td>buildingArea</td>
+                                        <td>emptyArea</td>
+                                        <td>rentPrice</td>
+                                        <td>serviceCost</td>
+                                        <td>brokerageFee</td>
+                                        <td>
+                                            <a class="btn btn-xs btn-primary " data-toggle="tooltip"
+                                               title="Thông tin tòa nhà " href="#" /><i class="fa fa-eye" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table> <!-- table-->
+                            <ul class="pagination" id="pagination"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

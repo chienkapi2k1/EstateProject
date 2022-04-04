@@ -1,0 +1,417 @@
+﻿@model List<EstateProject.Models.ListContact>
+@{
+    ViewBag.Title = "Danh Sách Liên Hệ Khách Hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <style>
+        .myModal {
+            display: none; /* mặc định được ẩn đi */
+            position: fixed; /* vị trí cố định */
+            z-index: 1000; /* Ưu tiên hiển thị trên cùng */
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100% !important;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .spinner-grow {
+            display: none;
+        }
+
+        .myModal .modal-header {
+            background-color: #ebebeb;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #4f556b;
+            width: 50%;
+        }
+
+        /* Modal Content */
+        .myModal .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            overflow: auto;
+        }
+
+        /* The Close Button */
+        .myModal .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .myModal .close:hover,
+            .myModal .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+    </style>
+}
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        @*<script type="text/javascript">
+                const { type } = require("jquery");
+
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                    }
+            </script>*@
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="../index1.html">
+                    Trang chủ
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    Quản lý khách hàng
+                </a>
+            </li>
+            <li class="active">
+                Danh sách khách hàng
+            </li>
+        </ul><!-- /.breadcrumb -->
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="widget-box table-filter">
+                            <div class="widget-header">
+                                <h4 class="widget-title" style="font-family: VnBlack">
+                                    Tìm kiếm
+                                </h4>
+                                <div class="widget-toolbar">
+                                    <a href="#" data-action="collapse">
+                                        <i class="ace-icon fa fa-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <form id="listFormCustomer" method="get" action="@Url.Action("ListContact","Contact")">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <div class="form-horizontal">
+                                            <div class="row">
+                                                @*<div class="col-sm-4">
+                                                        <label for="fullName">Tên khách hàng</label>
+                                                        <input type="text" class="form-control" id="fullName" />
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label for="phone">Di động  </label>
+                                                        <input type="text" class="form-control" id="phone" />
+                                                    </div>*@
+                                                <div class="col-sm-4">
+                                                    <label for="email">Email </label>
+                                                    <input type="text" class="form-control" id="email" name="email" value="@if(ViewBag.Search != null){@ViewBag.Search;}" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                @*<div class="col-sm-6">
+                                                        <label for="staffId" style="width: 500px;"> Nhân viên phụ trách</label>
+                                                        <select id="staffId" style=" margin-top: -2px;width: 405px;">
+                                                            <option value=""> &#45;&#45; Chọn nhân viên phụ trách &#45;&#45; </option>
+
+                                                        </select>
+                                                    </div>*@
+                                                <div class="col-sm-6">
+                                                    <label class="col-sm-2 control-label"></label>
+                                                    <button id="btnSearchCustomer" type="submit"
+                                                            class="btn btn-sm btn-success" style="float: right; margin-top: 24px;">
+                                                        Tìm kiếm
+                                                        <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="table-btn-controls">
+
+                                <!-- Nếu role = Manager thì show-->
+                                <div class="pull-right tableTools-container" style="margin-top: 8px;">
+                                    <div class="dt-buttons btn-overlap btn-group">
+
+                                        <a flag="info" href="#"
+                                           class="btnSendMail dt-button buttons-colvis btn btn-white btn-primary btn-bold"
+                                           data-toggle="tooltip" title="Thêm người dùng">
+                                            <span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
+                                                </svg>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table id="buildingList" class="table  table-bordered ">
+                                        <thead>
+                                            <tr style="font-family: VnBlack ; font-weight: bold; color: #000000;">
+                                                <th><input type="checkbox" id="checkAll" value="#" /></th>
+
+                                                <th>Nhân viên quản lý</th>
+                                                <th>Email</th>
+                                                <th>Tên  </th>
+                                                <th>Di động</th>
+                                                <th>Title</th>
+                                                <th>Tin Nhắn</th>
+                                                <th>Trạng Thái</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                foreach (var item in Model)
+                                                {
+                                                    <tr class="itemId" data-id="@item.id" data-email="@item.email">
+                                                        <td> <input type="checkbox" /></td>
+                                                        <td>@item.user_name</td>
+                                                        <td>@item.email</td>
+                                                        <td>@item.fullname</td>
+                                                        <td>@item.phone</td>
+                                                        <td>@item.title</td>
+                                                        <td>@item.messages</td>
+                                                        <td>
+                                                            @*
+                                                                status = 0 => Trạng thái: Chưa liên hệ lại với khách
+                                                                status = 1 => Trạng thái: Đã liên hệ lại với khách
+                                                                status = 2 => Trạng thái: Hủy
+                                                            *@
+                                                            @if (int.Parse(item.status) == 0)
+                                                            {
+                                                                <button class="form-group lienhe">Liên hệ</button>
+                                                                <button class="form-group huy">Hủy</button>
+                                                            }
+                                                            else if (int.Parse(item.status) == 1)
+                                                            {
+                                                                <span style="color: green">Contacted</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span style="color: red;">Cancelled</span>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table> <!-- table-->
+                                    <ul class="pagination" id="pagination"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="myModal" id="formAction">
+    <div class="modal-header">
+        <h3 class="title-modal">Send Mail for Guest</h3>
+        <span class="close">&times;</span>
+    </div>
+    <div class="modal-content">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body card-block">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="subject" class="form-control-label">Subject: </label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" id="subject" name="subject" class="form-control" placeholder="Enter subject...">
+                                <span class="help-block error_subject"></span>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="message" class="form-control-label">Message: </label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <textarea id="message" name="message" style="resize: none" placeholder="Enter Message ..." cols="55" rows="15"></textarea>
+                                <span class="help-block error_width"></span>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                </div>
+                <div class="card-footer" style="display: flex; justify-content: space-between;">
+                    <button type="submit" data-id="" class="btn btn-primary btn-sm sendMail">
+                        <i class="fa fa-dot-circle-o"></i> Send
+                    </button>
+                    <div class="spinner-grow" role="status">
+                        <span style="color: red">Loading...</span>
+                        <img src="//s.svgbox.net/loaders.svg?fill=maroon&ic=tail-spin" width="50px;" height="50px;" />
+                    </div>
+                    <button type="reset" class="btn btn-danger btn-sm resetCate">
+                        <i class="fa fa-ban"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            function changeStatus(that, id, status) {
+                $.ajax({
+                    url: '/contact/saveContact',
+                    type: 'put',
+                    data: {
+                        "id": id,
+                        "status": status,
+                    },
+                    success: function (response) {
+                        if (response.status == 1) {
+                            var str = `<span style="color: green">${response.message}</span>`;
+                            that.html(str);
+
+                            Swal.fire(
+                                'Success!',
+                                'Successful!!.',
+                                'success'
+                            )
+                        }
+                        else {
+                            if (response.status == 2) {
+                                var str = `<span style="color: red">${response.message}</span>`;
+                                that.html(str);
+
+                                Swal.fire(
+                                    'Success!',
+                                    'Successful!!.',
+                                    'success'
+                                )
+                            }
+                            else {
+                                alert(response.message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+
+            $(".lienhe").click(function () {
+                var that = $(this).parent();
+                var id = $(this).parent().parent(".itemId").attr('data-id');
+                var status = 1;
+                changeStatus(that, id, status);
+            });
+            $(".huy").click(function () {
+                var that = $(this).parent();
+                var id = $(this).parent().parent(".itemId").attr('data-id');
+                var status = 2;
+                changeStatus(that, id, status);
+            });
+
+            $(".btnSendMail").click(function () {
+                $("#formAction").show();
+            });
+
+            $(".close").click(function () {
+                $("#formAction").hide();
+            });
+
+            $(".sendMail").click(function () {
+                var arr = [];
+                var subject = $('#subject').val();
+                var message = $('#message').val();
+                var id = [];
+                $.each($('input:checked'), function () {
+                    arr.push($(this).closest('.itemId').attr('data-email'));
+                    id.push($(this).closest('.itemId').attr('data-id'));
+                })
+                $.ajax({
+
+                    url: '/contact/sendMail',
+                    type: 'post',
+                    data: { 'data': arr, 'subject': subject, 'message': message, 'id': id },
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $('.spinner-grow').show();
+                        $(".sendMail").prop('disabled', true);
+                        $(".resetCate").prop('disabled', true);
+                    },
+                    success: function (response) {
+                        if (response.ok == true) {
+                            if (response.lstEmail.length > 0) {
+
+                                $.each($('input:checked'), function () {
+                                    console.log($(this).parent().siblings('td:nth-child(8)').html(`<span style ="color:green">Contacted</span>`))
+                                })
+
+                                Swal.fire(
+                                    'Success!',
+                                    'Send mail successfull!!.',
+                                    'success'
+                                )
+                            } else {
+                                Swal.fire(
+                                    'Oops...!',
+                                    'Please choose email you want to send.',
+                                    'error',
+                                )
+                            }
+                        }
+                        else {
+                            Swal.fire(
+                                'Oops...!',
+                                'Please fill out the information completely !!',
+                                'error',
+                            )
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    },
+                    complete: function () {
+                        $('.spinner-grow').hide();
+                        $(".sendMail").prop('disabled', false);
+                        $(".resetCate").prop('disabled', false);
+                    }
+                })
+            });
+        });
+    </script>
+}

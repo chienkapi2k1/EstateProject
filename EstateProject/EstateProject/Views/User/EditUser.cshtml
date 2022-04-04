@@ -1,0 +1,173 @@
+﻿@{
+    ViewBag.Title = "Chỉnh sửa nhân viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (TempData["OK"] != null)
+    {
+        <script type="text/javascript">
+        Swal.fire(
+            'Successful!!',
+            "@((string)TempData["OK"])",
+            "success"
+        )
+        </script>
+    }
+}
+
+
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="../index1.html">
+                    Trang chủ
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    Quản lý tài khoản
+                </a>
+            </li>
+            <li class="active">Chỉnh sửa người dùng</li>
+        </ul><!-- /.breadcrumb -->
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                <form id="formEdit" class="form-horizontal" action="@Url.Action("EditUser", "User")" method="post">
+                    <div id="profile">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">Vai trò</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="role" id="role" value="MANAGER" readonly />
+
+                            </div>
+                        </div>
+                        <div class="space-4"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">Tên đăng nhập</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="userName" name="userName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">Mật khẩu</label>
+                            <div class="col-sm-7">
+                                <input type="password" id="password" name="password" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="space-4"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">Tên đầy đủ</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="fullname" name="fullname" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">Email</label>
+                            <div class="col-sm-7">
+                                <input type="email" id="email" name="email" class="form-control" />
+                            </div>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">Số điện thoại</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="phone" name="phone" class="form-control" />
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">Trạng thái</label>
+                            <div class="col-sm-7" style="display: flex; padding-top: 0.7rem;">
+                                <input type="radio" id="status" checked name="status" value="1" class="form-control" style="width: auto; height: auto;" /> <span style="
+                                padding-left: 0.5em;
+                            ">Hoạt động</span>
+                            </div>
+
+                        </div>
+
+
+                        @*<div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right">Địa chỉ</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" />
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right">Giới tính</label>
+                                <div class="col-sm-7">
+                                    <select name="gender" id="gender">
+                                        <option value=""> -- Chọn giới tính -- </option>
+
+                                        th:value="${item}" th:text="${item}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="thumbnail">Ảnh đại diện</label>
+                                <div class="col-sm-4">
+                                    <input style="margin-top: 6px;" type="file" id="thumbnail" accept="image/png, image/jpeg, image/jpg" placeholder="thumbnail">
+                                </div>
+                                <div class="col-sm-5">
+                                    <img id="fileImage" alt="Ảnh đại diện" style="width: 300px; height: 400px;" />
+                                </div>
+
+                            </div>*@
+                        <div class="space-4"></div>
+                        <div class="clearfix form-actions">
+                            <div class="col-md-offset-3 col-md-9">
+                                <!--
+                                 TH: Id != null thì show 2 button này
+                                   <div  >
+                                    <button class="btn btn-info" type="button"  id="btnUpdateUsers" >
+                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                        Cập nhật người dùng
+                                    </button>
+                                    <button class="btn btn-info" type="button"  id="btnResetPassword" >
+                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                        Reset mật khẩu
+                                    </button>
+                                    &lt;!&ndash;<img src="/img/loading.gif" style="display: none; height: 100px" id="loading_image">&ndash;&gt;
+                                </div>-->
+                                <!-- TH : id == null thì show 2 button này-->
+                                <div>
+                                    <button class="btn btn-info" type="submit" id="btnAddUsers">
+                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                        Thêm mới người dùng
+                                    </button>
+                                    <button class="btn reset" type="reset">
+                                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                                        Hủy
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="userId" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $('.reset').click(function () {
+            location.href = baseurl + "/User/ListUser";
+        });
+    </script>
+}
+
