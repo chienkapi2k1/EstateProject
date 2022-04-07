@@ -158,7 +158,7 @@
     <Compile Include="Controllers\Admin\UserController - Copy.cs" />
     <Compile Include="Controllers\Admin\BuildingController.cs" />
     <Compile Include="Controllers\Admin\AdminController.cs" />
-    <Compile Include="Controllers\Client\TestController.cs" />
+    <Compile Include="Controllers\Client\ClientController.cs" />
     <Compile Include="Dao\BuildingDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Dto\BuildingDto.cs" />
@@ -564,8 +564,8 @@
     <Content Include="Views\User\EditUser.cshtml" />
     <Content Include="Views\Building\MyListBuilding.cshtml" />
     <Content Include="Views\Contact\ListContact.cshtml" />
-    <Content Include="Views\Shared\_LayoutPage1.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutPage2.cshtml" />
+    <Content Include="Views\Client\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
