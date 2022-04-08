@@ -38,7 +38,7 @@ namespace EstateProject.Common
             building.linkofbuilding = dto.linkofbuilding;
             building.note = dto.note;
             building.map = dto.map;
-            
+            building.user_id = dto.UserId;
             building.avatar = dto.avatar;
             return building;
         }
