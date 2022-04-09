@@ -273,7 +273,10 @@
 .property-item {
     box-shadow: 0 0 30px rgba(0, 0, 0, .08);
 }
-
+.property-imgage {
+    width: 100%;
+    height: 20rem;
+}
 .property-item img {
     transition: .5s;
 }

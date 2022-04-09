@@ -29,6 +29,7 @@
 
     <!-- Template Stylesheet -->
     <link href="~/Assets/Client/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -55,25 +56,25 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="index.html" class="nav-item nav-link active">Home</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
+                        @*<a href="about.html" class="nav-item nav-link">About</a>*@
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
+                            <a href="@Url.Action("AllBuilding", "Client")" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Building</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="property-list.html" class="dropdown-item">Property List</a>
-                                <a href="property-type.html" class="dropdown-item">Property Type</a>
-                                <a href="property-agent.html" class="dropdown-item">Property Agent</a>
+                                <a href="@Url.Action("AllBuilding", "Client")" class="dropdown-item">List Building</a>
+                                <a href="@Url.Action("Index", "Client")" class="dropdown-item">Hot Building</a>
+                                @*<a href="property-agent.html" class="dropdown-item">Property Agent</a>*@
                             </div>
                         </div>
-                        <div class="nav-item dropdown">
+                        @*<div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                <a href="404.html" class="dropdown-item">404 Error</a>
+                                <a href="#" class="dropdown-item">Testimonial</a>
+                                <a href="#" class="dropdown-item">404 Error</a>
                             </div>
-                        </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        </div>*@
+                        @*<a href="#" class="nav-item nav-link">Contact</a>*@
                     </div>
-                    <a href="" class="btn btn-primary px-3 d-none d-lg-flex">Add Property</a>
+                    @*<a href="" class="btn btn-primary px-3 d-none d-lg-flex">Add Property</a>*@
                 </div>
             </nav>
         </div>
@@ -86,7 +87,7 @@
                 <div class="row g-2">
                     <div class="col-md-10">
                         <div class="row g-2">
-                            <div class="col-md-4">
+                            <div class="col-md-12">
                                 <input type="text" class="form-control border-0 py-3" placeholder="Search Keyword">
                             </div>
                             <div class="col-md-4">
@@ -114,11 +115,9 @@
             </div>
         </div>
         <!-- Search End -->
-
         <!-- Property List Start -->
         @RenderBody()
         <!-- Property List End -->
-
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container py-5">
@@ -197,9 +196,7 @@
                 </div>
             </div>
         </div>
-        <!-- Footer End -->
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <!-- Footer End -->s
     </div>
 
     <!-- JavaScript Libraries -->
@@ -212,6 +209,7 @@
 
     <!-- Template Javascript -->
     <script src="~/Assets/Client/js/main.js"></script>
+
 </body>
 
 </html>
