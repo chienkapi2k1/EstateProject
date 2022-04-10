@@ -36,7 +36,7 @@
             <div class="container">
                 <!-- Logo -->
                 <div class="logo float-left">
-                    <a href="index-2.html" title=""><img src="~/Assets/Client/template/images/logo-header.png" alt=""></a>
+                    <a href="@Url.Action("Index","Client")" title=""><img src="~/Assets/Client/template/images/logo-header.png" alt=""></a>
                 </div>
                 <!-- End Logo -->
                 <!-- Bars -->
@@ -50,7 +50,7 @@
                             <div class="tb-cell">
                                 <ul class="menu-list text-uppercase">
                                     <li>
-                                        <a href="index-2.html" title="">Home</a>
+                                        <a href="@Url.Action("Index","Client")" title="">Home</a>
                                     </li>
                                     @*<li>
                                         <a href="#">Pages</a>
@@ -78,24 +78,16 @@
                                         <a href="#" title="">Building</a>
                                         <ul class="sub-menu">
                                             <li>
-                                                <a href="home-hotel.html" title="">List Building</a>
+                                                <a href="@Url.Action("AllBuilding", "Client")" title="">List Building</a>
                                             </li>
                                             <li>
-                                                <a href="hotel-list.html">Hot Building</a>
+                                                <a href="@Url.Action("Index", "Client")">Hot Building</a>
                                             </li>
                                         </ul>
                                     </li>
-                                    @*<li>
-                                        <a href="#" title="">Flights</a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <a href="home-flight.html" title="">Flights</a>
-                                            </li>
-                                            <li>
-                                                <a href="flight-list.html">Flight List</a>
-                                            </li>
-                                        </ul>
-                                    </li>*@
+                                    <li>
+                                        <a href="@Url.Action("AddContact","CLient")" title="">Contacts</a>
+                                    </li>
                                     @*<li>
                                         <a href="#" title="">Car</a>
                                         <ul class="sub-menu">

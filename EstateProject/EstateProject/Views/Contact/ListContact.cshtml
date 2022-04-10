@@ -186,23 +186,24 @@
                                         </thead>
                                         <tbody>
                                             @{
-                                                foreach (var item in Model)
-                                                {
-                                                    <tr class="itemId" data-id="@item.id" data-email="@item.email">
-                                                        <td> <input type="checkbox" /></td>
-                                                        <td>@item.user_name</td>
-                                                        <td>@item.email</td>
-                                                        <td>@item.fullname</td>
-                                                        <td>@item.phone</td>
-                                                        <td>@item.title</td>
-                                                        <td>@item.messages</td>
-                                                        <td>
-                                                            @*
-                                                                status = 0 => Trạng thái: Chưa liên hệ lại với khách
-                                                                status = 1 => Trạng thái: Đã liên hệ lại với khách
-                                                                status = 2 => Trạng thái: Hủy
-                                                            *@
-                                                            @if (int.Parse(item.status) == 0)
+                                            foreach (var item in Model)
+                                            {
+                                                <tr class="itemId" data-id="@item.id" data-email="@item.email">
+                                                    <td> <input type="checkbox" /></td>
+                                                    <td>@item.user_name</td>
+                                                    <td>@item.email</td>
+                                                    <td>@item.fullname</td>
+                                                    <td>@item.phone</td>
+                                                    <td>@item.title</td>
+                                                    <td>@item.messages</td>
+                                                    <td>
+                                                        @*status = 0 => Trạng thái: Chưa liên hệ lại với khách
+                                                        status = 1 => Trạng thái: Đã liên hệ lại với khách
+                                                        status = 2 => Trạng thái: Hủy*@
+                                                            
+                                                        @if (item.status != null)
+                                                        {
+                                                            if (int.Parse(item.status) == 0)
                                                             {
                                                                 <button class="form-group lienhe">Liên hệ</button>
                                                                 <button class="form-group huy">Hủy</button>
@@ -215,9 +216,11 @@
                                                             {
                                                                 <span style="color: red;">Cancelled</span>
                                                             }
-                                                        </td>
-                                                    </tr>
-                                                }
+                                                        }
+
+                                                    </td>
+                                                </tr>
+                                            }
                                             }
 
                                         </tbody>

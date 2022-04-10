@@ -43,8 +43,8 @@
     <div class="page-content">
         <div class="row">
             <div class="col-xs-12">
-                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                 <form id="formEdit" class="form-horizontal" action="@Url.Action("EditUser", "User")" method="post">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                     <div id="profile">
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right">Vai trò</label>
@@ -99,48 +99,48 @@
 
 
                         @*<div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right">Địa chỉ</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" />
-                                </div>
+                <label class="col-sm-3 control-label no-padding-right">Địa chỉ</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" />
+                </div>
 
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right">Giới tính</label>
-                                <div class="col-sm-7">
-                                    <select name="gender" id="gender">
-                                        <option value=""> -- Chọn giới tính -- </option>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Giới tính</label>
+                <div class="col-sm-7">
+                    <select name="gender" id="gender">
+                        <option value=""> -- Chọn giới tính -- </option>
 
-                                        th:value="${item}" th:text="${item}"></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="thumbnail">Ảnh đại diện</label>
-                                <div class="col-sm-4">
-                                    <input style="margin-top: 6px;" type="file" id="thumbnail" accept="image/png, image/jpeg, image/jpg" placeholder="thumbnail">
-                                </div>
-                                <div class="col-sm-5">
-                                    <img id="fileImage" alt="Ảnh đại diện" style="width: 300px; height: 400px;" />
-                                </div>
+                        th:value="${item}" th:text="${item}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="thumbnail">Ảnh đại diện</label>
+                <div class="col-sm-4">
+                    <input style="margin-top: 6px;" type="file" id="thumbnail" accept="image/png, image/jpeg, image/jpg" placeholder="thumbnail">
+                </div>
+                <div class="col-sm-5">
+                    <img id="fileImage" alt="Ảnh đại diện" style="width: 300px; height: 400px;" />
+                </div>
 
-                            </div>*@
+            </div>*@
                         <div class="space-4"></div>
                         <div class="clearfix form-actions">
                             <div class="col-md-offset-3 col-md-9">
                                 <!--
-                                 TH: Id != null thì show 2 button này
-                                   <div  >
-                                    <button class="btn btn-info" type="button"  id="btnUpdateUsers" >
-                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                        Cập nhật người dùng
-                                    </button>
-                                    <button class="btn btn-info" type="button"  id="btnResetPassword" >
-                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                        Reset mật khẩu
-                                    </button>
-                                    &lt;!&ndash;<img src="/img/loading.gif" style="display: none; height: 100px" id="loading_image">&ndash;&gt;
-                                </div>-->
+                 TH: Id != null thì show 2 button này
+                   <div  >
+                    <button class="btn btn-info" type="button"  id="btnUpdateUsers" >
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Cập nhật người dùng
+                    </button>
+                    <button class="btn btn-info" type="button"  id="btnResetPassword" >
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Reset mật khẩu
+                    </button>
+                    &lt;!&ndash;<img src="/img/loading.gif" style="display: none; height: 100px" id="loading_image">&ndash;&gt;
+                </div>-->
                                 <!-- TH : id == null thì show 2 button này-->
                                 <div>
                                     <button class="btn btn-info" type="submit" id="btnAddUsers">

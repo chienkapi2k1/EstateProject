@@ -34,7 +34,7 @@
                         <div class="col-sm-5 text-right">
                             <p class="price-book">
                                 <span>@Model.rentprice đ</span>/Month
-                                <a href="#" title="" class="awe-btn awe-btn-1 awe-btn-lager">Book Now</a>
+                                <a href="@Url.Action("AddContact","Client")" title="" class="awe-btn awe-btn-1 awe-btn-lager">Contact Now</a>
                             </p>
                         </div>
                     </div>
@@ -97,9 +97,9 @@
                                 <img style="height: 250px; width: auto; " src="@Url.Content(@Model.users.image)" alt="">
                                 <h3 style="width:max-content;">@Model.users.fullname</h3>
                                 <h4 style="width:max-content;">SĐT : @Model.users.phone</h4>
-
+                                <h4 style="width:max-content; font-size:14px;">Email : @Model.users.email</h4>
+                                <a href="@Url.Action("AddContact","Client")" title="" class="awe-btn awe-btn-1 awe-btn-lager price-book"><b style="font-size:18px;">Contact Now</b></a>
                             </div>
-
                             <!-- Vote Text -->
                             <div class="row">
                                 <!-- Recommend -->
@@ -109,18 +109,18 @@
                                     <hr class="hr">
                                 </div>
                                 <!--<div class="col-xs-6 col-sm-6 col-md-3 col-lg-6 vote-text">
-                                    <p><span>95</span>%</p>
-                                    <small>Member Recommend</small>
-                                    <a href="#" title="">Read 36 Reviews</a>
+                            <p><span>95</span>%</p>
+                            <small>Member Recommend</small>
+                            <a href="#" title="">Read 36 Reviews</a>
 
-                                </div>-->
+                        </div>-->
                                 <!-- End Recommend -->
                                 <!-- Tripadvitsor -->
                                 <!--<div class="col-xs-6 col-sm-6 col-md-3 col-lg-6  vote-text">
-                                    <img src="~/Assets/Client/template/images/icon-tripadvitsor.png" alt="">
-                                    <small>4.5 Very Good</small>
-                                    <a href="#" title="">145 Reviews</a>
-                                </div>-->
+                            <img src="~/Assets/Client/template/images/icon-tripadvitsor.png" alt="">
+                            <small>4.5 Very Good</small>
+                            <a href="#" title="">145 Reviews</a>
+                        </div>-->
                             </div>
                             <!-- End Vote Text -->
 
@@ -144,49 +144,89 @@
                                 <li>@Model.name, @Model.street, @Model.ward, @Model.district , Ha Noi</li>
                             </ul>
                         </div>
-                        <div class="customer-like">
-                            <span class="cs-like-label">
-                                Structure
-                            </span>
-                            <ul>
-                                <li>@Model.structure </li>
-                            </ul>
-                        </div>
-                        <div class="customer-like">
-                            <span class="cs-like-label">
-                                Number of basement
-                            </span>
-                            <ul>
-                                <li>@Model.numberofbasement </li>
-                            </ul>
-                        </div>
-                        <div class="customer-like">
-                            <span class="cs-like-label">
-                                Floor area
-                            </span>
-                            <ul>
-                                <li>@Model.floorarea m²</li>
-                            </ul>
-                        </div>
-                        <div class="customer-like">
-                            <span class="cs-like-label">
-                                Direction
-                            </span>
-                            <ul>
-                                <li>@Model.direction</li>
-                            </ul>
-                        </div>
+                        @{
+                            if (@Model.structure != null)
+                            {
+                                <div class="customer-like">
+                                    <span class="cs-like-label">
+                                        Structure
+                                    </span>
+                                    <ul>
+                                        <li>@Model.structure </li>
+                                    </ul>
+                                </div>
+                            }
+                        }
+                        @{
+                            if (@Model.numberofbasement != null)
+                            {
+                                <div class="customer-like">
+                                    <span class="cs-like-label">
+                                        Number of basement
+                                    </span>
+                                    <ul>
+                                        <li>@Model.numberofbasement </li>
+                                    </ul>
+                                </div>
+                            }
+                        }
+                        @{
+                            if (@Model.floorarea != null)
+                            {
+                                <div class="customer-like">
+                                    <span class="cs-like-label">
+                                        Floor area
+                                    </span>
+                                    <ul>
+                                        <li>@Model.floorarea m²</li>
+                                    </ul>
+                                </div>
+                            }
+                        }
+                        @{
+                            if (@Model.direction != null)
+                            {
+                                <div class="customer-like">
+                                    <span class="cs-like-label">
+                                        Direction
+                                    </span>
+                                    <ul>
+                                        <li>@Model.direction</li>
+                                    </ul>
+                                </div>
+                            }
+                        }
+
                         <div class="customer-like">
                             <span class="cs-like-label">
                                 Type
                             </span>
                             <ul>
-                                    @{ 
-                                        if (@Model.typess.ToString() == "NOI_THAT") {<li>Nội Thất</li>}
-                                        if (@Model.typess.ToString() == "NGUYEN_CAN") {<li>Nguyên Căn</li>}
-                                        if (@Model.typess.ToString() == "TANG_TRET") {<li>Tầng Trệt</li>}
-                                    }                        
+                                @{
+                                    if (@Model.typess.ToString() == "NOI_THAT")
+                                    {
+                                        <li>Noi That</li>
+                                    }
+                                    if (@Model.typess.ToString() == "NGUYEN_CAN")
+                                    {
+                                        <li>Nguyen Can</li>
+                                    }
+                                    if (@Model.typess.ToString() == "TANG_TRET")
+                                    {
+                                        <li>Tang Tret</li>
+                                    }
+                                }
                             </ul>
+                        </div>
+                        <div class="policies-item">
+                            <h3>Apartment Description</h3>
+                            <p>
+                                @Model.note
+                                <br>
+                                Morbi sed sollicitudin augue. Ut metus nibh, fringilla vitae mi in, aliquam ullamcorper nisl. Integer id tincidunt libero. Donec pharetra est sed suscipit efficitur. In a gravida quam. Aenean vel dolor augue. In nec lacinia enim, vitae fermentum elit. Aliquam non diam sed lectus commodo hendrerit.
+                                <br>
+                                Vivamus pulvinar nulla id massa congue varius. Etiam vitae nunc consectetur, porttitor purus ac, sagittis dui. Ut sit amet consectetur diam. Suspendisse mollis dapibus porta. In erat quam, pulvinar eu efficitur ut, malesuada nec augue. Pellentesque odio orci, interdum eu tortor sollicitudin, tincidunt placerat erat. Quisque pretium mauris at condimentum imperdiet.
+                            </p>
                         </div>
                         <!-- End Custom link field -->
 
@@ -195,275 +235,31 @@
                 </div>
 
             </section>
-            <!-- End Hotel Content One -->
+            </section>
+            <!-- End Hotel Features -->
             <!-- Details-Policies -->
             <section class="details-policies detail-cn" id="details-policies">
                 <div class="row">
                     <div class="col-lg-3 detail-sidebar">
                         <div class="scroll-heading">
-                            <h2>Details &amp; Policies</h2>
+                            <h2>Map</h2>
                             <hr class="hr">
-                            <a href="#check-rates" title="">Check Rates &amp; Availability</a>
-                            <a href="#hl-features" title="">Features</a>
-                            <a href="#review-detail" title="">Reviews</a>
                         </div>
                     </div>
                     <div class="col-lg-9 details-policies-cn">
 
-                        <!-- Details Policies Item -->
-                        <div class="policies-item">
-                            <h3>Apartment Description</h3>
-                            <p>
-                                Morbi sed sollicitudin augue. Ut metus nibh, fringilla vitae mi in, aliquam ullamcorper nisl. Integer id tincidunt libero. Donec pharetra est sed suscipit efficitur. In a gravida quam. Aenean vel dolor augue. In nec lacinia enim, vitae fermentum elit. Aliquam non diam sed lectus commodo hendrerit.
-                                <br>
-                                Vivamus pulvinar nulla id massa congue varius. Etiam vitae nunc consectetur, porttitor purus ac, sagittis dui. Ut sit amet consectetur diam. Suspendisse mollis dapibus porta. In erat quam, pulvinar eu efficitur ut, malesuada nec augue. Pellentesque odio orci, interdum eu tortor sollicitudin, tincidunt placerat erat. Quisque pretium mauris at condimentum imperdiet.
-                            </p>
-                        </div>
-                        <!-- End Details Policies Item -->
-                        <!-- Details Policies Item -->
-                        <div class="policies-item">
-                            <h3>Apartment Description</h3>
-                            <p>
-                                Morbi sed sollicitudin augue. Ut metus nibh, fringilla vitae mi in, aliquam ullamcorper nisl. Integer id tincidunt libero. Donec pharetra est sed suscipit efficitur. In a gravida quam. Aenean vel dolor augue. In nec lacinia enim, vitae fermentum elit. Aliquam non diam sed lectus commodo hendrerit.
-                                <br>
-                                Vivamus pulvinar nulla id massa congue varius. Etiam vitae nunc consectetur, porttitor purus ac, sagittis dui. Ut sit amet consectetur diam. Suspendisse mollis dapibus porta. In erat quam, pulvinar eu efficitur ut, malesuada nec augue. Pellentesque odio orci, interdum eu tortor sollicitudin, tincidunt placerat erat. Quisque pretium mauris at condimentum imperdiet.
-                            </p>
-                        </div>
-                        <!-- End Details Policies Item -->
-                        <!-- Details Policies Item -->
-                        <div class="policies-item">
-                            <h3>Apartment Description</h3>
-                            <p>
-                                Morbi sed sollicitudin augue. Ut metus nibh, fringilla vitae mi in, aliquam ullamcorper nisl. Integer id tincidunt libero. Donec pharetra est sed suscipit efficitur. In a gravida quam. Aenean vel dolor augue. In nec lacinia enim, vitae fermentum elit. Aliquam non diam sed lectus commodo hendrerit.
-                                <br>
-                                Vivamus pulvinar nulla id massa congue varius. Etiam vitae nunc consectetur, porttitor purus ac, sagittis dui. Ut sit amet consectetur diam. Suspendisse mollis dapibus porta. In erat quam, pulvinar eu efficitur ut, malesuada nec augue. Pellentesque odio orci, interdum eu tortor sollicitudin, tincidunt placerat erat. Quisque pretium mauris at condimentum imperdiet.
-                            </p>
-                        </div>
-                        <!-- End Details Policies Item -->
+                        <iframe class="position-relative rounded w-100 h-100 "
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd"
+                                frameborder="0" style="min-height: 600px; width:800px; border:0;" allowfullscreen="" aria-hidden="false"
+                                tabindex="0"></iframe>
 
                     </div>
                 </div>
             </section>
-            <!-- End Details-Policies -->
-            <!-- Hotel Detail Reviews -->
-            <!--<section class="review-detail detail-cn" id="review-detail">
-                <div class="row">
-                    <div class="col-lg-3 detail-sidebar">
-                        <div class="scroll-heading">
-                            <h2>Reviews</h2>
-                            <hr class="hr">
-                            <a href="#check-rates" title="">Check Rates &amp; Availability</a>
-                            <a href="#hl-features" title="">Features</a>
-                            <a href="#details-policies" title="">Details &amp; Policies</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-9 review-detail-cn">-->
-                        <!-- Review Tabs -->
-                        <!--<div class="review-tabs">-->
-                            <!-- Tabs Head -->
-                            <!--<ul class="tabs-head nav-tabs-one">
-                                <li class="active"><a data-toggle="tab" href="#section1">Member reviews</a></li>
-                                <li><a data-toggle="tab" href="#section2">TripAdvisor reviews</a></li>
-                            </ul>-->
-                            <!-- Tabs Head -->
-                            <!-- Tabs Content -->
-                            <!--<div class="tab-content">
-                                <div id="section1" class="tab-pane fade in active">
-                                    <div class="review-tabs-cn">
-                                        <div class="row">
-                                            <div class="col-sm-4 col-md-3 col-lg-4 col-lg-push-8 col-md-push-9 col-sm-push-8">
-                                                <div class="review-vote text-center">
-                                                    <h3>
-                                                        Fantastic
-                                                    </h3>
-                                                    <span class="vote-score">8.5</span>
-                                                    <span class="vote-number">from <strong>145</strong> reviews</span>
-                                                    <p>
-                                                        <span><strong>95</strong>%</span>
-                                                        Recommend
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-8 col-md-9 col-lg-8 col-lg-pull-4 col-md-pull-3 col-sm-pull-4">
-                                                <div class="review-st">-->
-                                                    <!-- Rule -->
-                                                    <!--<div class="row row-rule">
-                                                        <div class="col-md-5 lable-st">&nbsp;</div>
-                                                        <div class="col-md-7">
-                                                            <div class="rule-point">
-                                                                <span>0</span>
-                                                                <span>2</span>
-                                                                <span>4</span>
-                                                                <span>6</span>
-                                                                <span>8</span>
-                                                                <span>10</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>-->
-                                                    <!-- End Rule -->
-                                                    <!-- Item -->
-                                                    <!--<div class="row">
-                                                        <div class="col-md-5 lable-st">Value for Money</div>
-                                                        <div class="col-md-7">
-                                                            <div class="progress-rv" data-value="7.5"></div>
-                                                        </div>
-                                                    </div>-->
-                                                    <!-- End Item -->
-                                                    <!-- Item -->
-                                                    <!--<div class="row">
-                                                        <div class="col-md-5 lable-st">Location</div>
-                                                        <div class="col-md-7">
-                                                            <div class="progress-rv" data-value="6.0"></div>
-                                                        </div>
-                                                    </div>-->
-                                                    <!-- End Item -->
-                                                    <!-- Item -->
-                                                    <!--<div class="row">
-                                                        <div class="col-md-5 lable-st">Staff Performance</div>
-                                                        <div class="col-md-7">
-                                                            <div class="progress-rv" data-value="8.0"></div>
-                                                        </div>
-                                                    </div>-->
-                                                    <!-- End Item -->
-                                                    <!-- Item -->
-                                                    <!--<div class="row">
-                                                        <div class="lable-st col-md-5">Hotel Condition/Cleanliness</div>
-                                                        <div class="col-md-7">
-                                                            <div class="progress-rv" data-value="6.0"></div>
-                                                        </div>
-                                                    </div>-->
-                                                    <!-- End Item -->
-                                                    <!-- Item -->
-                                                    <!--<div class="row">
-                                                        <div class="lable-st col-md-5">Room Comfort/Standard</div>
-                                                        <div class="col-md-7">
-                                                            <div class="progress-rv" data-value="8.0"></div>
-                                                        </div>
-                                                    </div>-->
-                                                    <!-- End Item -->
-                                                    <!-- Item -->
-                                                    <!--<div class="row">
-                                                        <div class="lable-st col-md-5">Food/Dining</div>
-                                                        <div class="col-md-7">
-                                                            <div class="progress-rv" data-value="4.5"></div>
-                                                        </div>
-                                                    </div>-->
-                                                    <!-- End Item -->
-                                                <!--</div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="section2" class="tab-pane fade">
-
-                                </div>
-                            </div>-->
-                            <!-- Tabs Content -->
-                        <!--</div>-->
-                        <!-- End Review Tabs -->
-                        <!-- Review All -->
-                        <!--<div class="review-all">
-                            <h4 class="review-h">
-                                All reviews (365)
-                            </h4>-->
-                            <!-- Review Item -->
-                            <!--<div class="row review-item">
-                                <div class="col-xs-3 review-number">
-                                    <ins>5.6</ins>
-                                    <span>Isbawandi Zin</span>
-                                    <small>from London, UK, 3/2/ 2014</small>
-                                </div>
-                                <div class="col-xs-9 review-text">
-                                    <ul>
-                                        <li><span class="icon fa fa-plus"></span>Location, warmth, cleanliness</li>
-                                        <li><span class="icon icon-minus fa fa-minus"></span>Noisy, expensive</li>
-                                    </ul>
-                                    <p>
-                                        Our stay was pleasant and joyful. We stayed in an apartment meant for 3 adults. First and foremost, close proximity to tube station was the reason of choosing this hotel. The cleaning services were fantastic. The support services were prompt...
-                                    </p>
-                                </div>
-                            </div>-->
-                            <!-- End Review Item -->
-                            <!-- Review Item -->
-                            <!--<div class="row review-item">
-                                <div class="col-xs-3 review-number">
-                                    <ins>9.0</ins>
-                                    <span>Isbawandi Zin</span>
-                                    <small>from London, UK, 3/2/ 2014</small>
-                                </div>
-                                <div class="col-xs-9 review-text">
-                                    <ul>
-                                        <li><span class="icon fa fa-plus"></span>Location, warmth, cleanliness</li>
-                                    </ul>
-                                    <p>
-                                        Our stay was pleasant and welcoming. We stayed in an apartment meant for 3 adults with kitchen facilities. The cleaning services were superp. We liked the laundry and kitchen cleaning services on top of the regular cleaning services. The support services were prompt...much needed extra bowls were delivered in a jiffy. Front desk were very cotdial and helpful though working under at times. Needed travel arrangements and info were delivered with smiles. Delivering luggeges to the room was done witbout request.. Computer and printing service in the lobby was really helpful...tbe charge reasonable
-                                    </p>
-                                </div>
-                            </div>-->
-                            <!-- End Review Item -->
-                            <!-- Review Item -->
-                            <!--<div class="row review-item">
-                                <div class="col-xs-3 review-number">
-                                    <ins>5.6</ins>
-                                    <span>Isbawandi Zin</span>
-                                    <small>from London, UK, 3/2/ 2014</small>
-                                </div>
-                                <div class="col-xs-9 review-text">
-                                    <ul>
-                                        <li><span class="icon fa fa-plus"></span>Location, warmth, cleanliness</li>
-                                        <li><span class="icon icon-minus fa fa-minus"></span>Noisy, expensive</li>
-                                    </ul>
-                                    <p>
-                                        Our stay was pleasant and joyful. We stayed in an apartment meant for 3 adults. First and foremost, close proximity to tube station was the reason of choosing this hotel. The cleaning services were fantastic. The support services were prompt...
-                                    </p>
-                                </div>
-                            </div>-->
-                            <!-- End Review Item -->
-                            <!-- Review Item -->
-                            <!--<div class="row review-item">
-                                <div class="col-xs-3 review-number">
-                                    <ins>9.0</ins>
-                                    <span>Isbawandi Zin</span>
-                                    <small>from London, UK, 3/2/ 2014</small>
-                                </div>
-                                <div class="col-xs-9 review-text">
-                                    <ul>
-                                        <li><span class="icon fa fa-plus"></span>Location, warmth, cleanliness</li>
-                                    </ul>
-                                    <p>
-                                        Our stay was pleasant and welcoming. We stayed in an apartment meant for 3 adults with kitchen facilities. The cleaning services were superp. We liked the laundry and kitchen cleaning services on top of the regular cleaning services. The support services were prompt...much needed extra bowls were delivered in a jiffy. Front desk were very cotdial and helpful though working under at times. Needed travel arrangements and info were delivered with smiles. Delivering luggeges to the room was done witbout request.. Computer and printing service in the lobby was really helpful...tbe charge reasonable
-                                    </p>
-                                </div>
-                            </div>-->
-                            <!-- End Review Item -->
-                        <!--</div>-->
-                        <!-- End Review All -->
-                    <!--</div>
-                </div>
-            </section>-->
-            <!-- End Hotel Detail Reviews -->
-
             <section class="detail-footer detail-cn">
                 <div class="row">
                     <div class="col-lg-3"></div>
-                    <div class="col-lg-9 detail-footer-cn">
-                        <!-- Show More Book -->
-                        @*<div class="row">
-                            <div class="col-xs-5 ">
-                                <div class="review-more">
-                                    <a href="#" title=""><i class="icon"></i> Show more reviews</a>
-                                </div>
-                            </div>
-                            <div class="col-xs-7 text-right">
-                                <p class="price-book">
-                                    From-<span>$345</span>/night
-                                    <a href="#" title="" class="awe-btn awe-btn-1 awe-btn-lager">Book Now</a>
-                                </p>
-                            </div>
-                        </div>*@
-                        <!-- End Show More Book -->
-                    </div>
+                    <div class="col-lg-9 detail-footer-cn"></div>
                 </div>
             </section>
         </div>
