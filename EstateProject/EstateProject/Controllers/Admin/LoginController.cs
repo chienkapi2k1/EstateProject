@@ -24,8 +24,6 @@ namespace EstateProject.Controllers.Admin
             return View();
         }
 
-    
-
         public ActionResult Login(LoginModel model)
         {
             if (ModelState.IsValid)

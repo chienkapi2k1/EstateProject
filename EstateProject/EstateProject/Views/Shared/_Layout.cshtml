@@ -13,6 +13,12 @@
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="//cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet' />
+
+
+
     @Scripts.Render("~/js/base")
     @Scripts.Render("~/js/paging")
     @{
@@ -208,17 +214,17 @@
                             <b class="arrow"></b>
                         </li>
                     </ul>
-                    <ul class="submenu">
+                    @*<ul class="submenu">
                         <li class="">
                             <a href="@Url.Action("MyListBuilding", "Building")">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                DS sản phẩm ưu tiên
+                                DS tòa nhà ưu tiên
                             </a>
                             <b class="arrow"></b>
                         </li>
-                    </ul>
+                    </ul>*@
                 </li>
-                <li class="">
+                @*<li class="">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-building"></i>
                         <span class="menu-text">QL tòa nhà ưu tiên</span>
@@ -229,12 +235,12 @@
                         <li class="">
                             <a href="@Url.Action("MyListBuilding", "Building")">
                                 <i class="menu-icon fa fa-caret-right"></i>
-                                DS sản phẩm ưu tiên
+                                DS tòa nhà ưu tiên
                             </a>
                             <b class="arrow"></b>
                         </li>
                     </ul>
-                </li>
+                </li>*@
                 <li class="">
                     @{
                         if (Session["Role"].ToString() == "ADMIN")

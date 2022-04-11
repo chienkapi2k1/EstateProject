@@ -169,6 +169,7 @@
     <Compile Include="Models\building.cs" />
     <Compile Include="Models\building_images.cs" />
     <Compile Include="Models\contacts.cs" />
+    <Compile Include="Models\District.cs" />
     <Compile Include="Models\EstateDbContext.cs" />
     <Compile Include="Models\ListContact.cs" />
     <Compile Include="Models\Metadata\contacts.Metadata.cs" />
@@ -833,7 +834,6 @@
     <Content Include="Views\Shared\_LayoutBuildingDetail.cshtml" />
     <Content Include="Views\Client\BuildingDetail1.cshtml" />
     <Content Include="Views\Client\AddContact.cshtml" />
-    <Content Include="Views\Client\BrokerPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

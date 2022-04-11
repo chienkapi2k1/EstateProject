@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EstateProject.Controllers.Admin
 {
-    public class ContactController : Controller
+    public class ContactController : BaseController
     {
         EstateDbContext dbContext = new EstateDbContext();
         // GET: Contact

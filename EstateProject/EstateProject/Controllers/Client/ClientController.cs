@@ -1,6 +1,7 @@
 ﻿using EstateProject.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,45 +12,81 @@ namespace EstateProject.Controllers.Client
     {
         EstateDbContext db = new EstateDbContext();
         // GET: Client
-        public ActionResult Index()
+        public ActionResult Index(string name, string district)
         {
             List<building> lstBuilding = db.building.Where(n => n.levels == "1").OrderBy(n => n.name).ToList();
-            //int pagesize = 12; //số sản phẩm trong 1 trang
-            //int pagenumber = (page ?? 1);     // số trang
             if (lstBuilding.Count == 0)
             {
                 Response.StatusCode = 404;
                 return null;
             }
             ViewBag.lstSanPham = db.building.ToList();
-            return View(lstBuilding/*.ToPagedList(pagenumber, pagesize)*/);
+            //search
+            List<District> districtss = new List<District>();
+            var D = db.building.Select(s => s.district).Distinct().ToList();
+            foreach (var item in D)
+            {
+                districtss.Add(new District(item));
+            }
+            ViewBag.ListDistricts = districtss;
+            if ((name != null && name != "") || (district != null && district != ""))
+            {
+                
+                name = name.Trim();
+                ViewBag.Name = name.Trim();
+                district = district.Trim();
+                if(district == "-")
+                {
+                    district = "";
+                }
+                TempData["District"] = district.Trim();
+                lstBuilding = lstBuilding.Where(x => x.levels == "1" && x.name.Contains(name) && x.district.Contains(district)).ToList();
+            }
+            return View(lstBuilding);
         }
 
-        public ActionResult AllBuilding()
+        public ActionResult AllBuilding(string name, string district)
         {
             List<building> lstBuilding = db.building.OrderBy(n => n.name).ToList();
-            //int pagesize = 12; //số sản phẩm trong 1 trang
-            //int pagenumber = (page ?? 1);     // số trang
             if (lstBuilding.Count == 0)
             {
                 Response.StatusCode = 404;
                 return null;
             }
             ViewBag.lstSanPham = db.building.ToList();
-            return View(lstBuilding/*.ToPagedList(pagenumber, pagesize)*/);
+            //search
+            List<District> districtss = new List<District>();
+            var D = db.building.Select(s => s.district).Distinct().ToList();
+            foreach (var item in D)
+            {
+                districtss.Add(new District(item));
+            }
+            ViewBag.ListDistricts = districtss;
+            if ((name != null && name != "") || (district != null && district != ""))
+            {
+                name = name.Trim();
+                ViewBag.Name = name.Trim();
+                district = district.Trim();
+                if (district == "-")
+                {
+                    district = "";
+                }
+                TempData["District"] = district.Trim();
+                lstBuilding = lstBuilding.Where(x => x.name.Contains(name) && x.district.Contains(district)).ToList();
+            }
+            return View(lstBuilding);
+            
+                
         }
         public ViewResult BuildingDetail1(int id)
         {
-            building building = db.building.SingleOrDefault(n => n.id == id);
+            building building = db.building.Single(n => n.id == id);
 
-            //user idUser = db.user.Find(id);
-            //List<user> user = db.user.Where(n => n.role == "STAFF").ToList();
-            //var selectList = new SelectList(user, "id", "fullname", idUser.id);
-
-            //ViewData["user_id"] = selectList;
-
-            //ViewData["user_idCheck"] = building.user_id;
-
+            if (TempData["Building_idUser"] != null)
+            {
+                TempData.Remove("Building_idUser");
+            }
+            TempData["Building_idUser"] = building.user_id;
             if (building == null)
             {
                 Response.StatusCode = 404;
@@ -58,9 +95,11 @@ namespace EstateProject.Controllers.Client
             return View(building);
         }
         [HttpGet]
-        public ActionResult AddContact(building building)
+        public ActionResult AddContact()
         {
-            ViewBag.user_id = new SelectList(db.user.Where(n => n.role == "STAFF").ToList(), "id", "fullname");
+            List<user> user = db.user.Where(n => n.role == "STAFF").ToList();
+            ViewBag.user = user;
+            //ViewBag.user_id = new SelectList(db.user.Where(n => n.role == "STAFF").ToList(), "id", "fullname");
             return View();
         }
         [HttpPost]
@@ -73,19 +112,12 @@ namespace EstateProject.Controllers.Client
                 contact.status = "0";
                 db.contacts.Add(contact);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("AddContact");
             }
-            //List<user> user = db.user.OrderBy(n => n.fullname).ToList();
-            //var selectList = new SelectList(user, "id", "fullname", idUser.id);
-
-            //ViewData["user_id"] = selectList;
-            ViewBag.user_id = new SelectList(db.user.Where(n => n.role == "STAFF").ToList(), "id", "fullname"); //
-            return View( );
-        }
-
-        public PartialViewResult BrokerPartial()
-        {
-            return PartialView(db.user.Where(n => n.role == "STAFF").ToList());
+            List<user> user = db.user.Where(n => n.role == "STAFF").ToList();
+            ViewBag.user = user;
+            //ViewBag.user_id = new SelectList(db.user.Where(n => n.role == "STAFF").ToList(), "id", "fullname"); //
+            return View();
         }
 
     }

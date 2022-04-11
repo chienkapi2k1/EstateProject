@@ -141,9 +141,9 @@
                                         <td scope="row">Loại tòa nhà : </td>
                                         <td>
                                             <li>
-                                                <input type="checkbox"  @check1 /> <label> Tầng Trệt </label>
+                                                <input type="checkbox" @check1 /> <label> Tầng Trệt </label>
                                                 <input type="checkbox" @check2 /> <label> Nội Thất </label>
-                                                <input type="checkbox"  @check3 /> <label> Nguyên Căn </label>
+                                                <input type="checkbox" @check3 /> <label> Nguyên Căn </label>
                                             </li>
                                         </td>
                                     </tr>
@@ -167,8 +167,8 @@
                         <h6 style="font-family: VnBlack ; font-weight: bold; color: #000000;">Ghi chú </h6>
                         <p>Ghi chú sẽ được thêm vào sau </p>
                     </div>
-                    <div class="col-sm-5" id="map">
-
+                    <div class="col-sm-5">
+                        <div id="map" style="width:400px; height:400px;"></div>
                     </div>
                 </div>
 
@@ -180,36 +180,21 @@
 
 @section scripts {
 
-    @*<script src="~/Assets/Admin/map/contact.js"></script>*@
     <script>
-        function initMap() {
-            const uluru = { lat: -25.363, lng: 131.044 };
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 4,
-                center: uluru,
-            });
+        mapboxgl.accessToken = 'pk.eyJ1IjoiaGFpZGFuZzA4MDUiLCJhIjoiY2wxdDJmbzZ5MXRhbDNkcGRpbXpnaDR5OCJ9.GVs3_jJ9ZtPvSRwGDvVLJg';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [@Model.map],
+            zoom: 11
+        });
 
-            const contentString = "Hello";
-
-            const infowindow = new google.maps.InfoWindow({
-                content: contentString,
-            });
-            const marker = new google.maps.Marker({
-                position: uluru,
-                map,
-                title: "Uluru (Ayers Rock)",
-            });
-
-            marker.addListener("click", () => {
-                infowindow.open({
-                    anchor: marker,
-                    map,
-                    shouldFocus: false,
-                });
-            });
-        }
+        var marker = new mapboxgl.Marker({
+            color: "red", //Màu của Marker là đỏ
+            draggable: true,
+            anchor: 'bottom', //Nhãn Hà Nội nằm dưới Marker
+        }).setLngLat([@Model.map]) //Thiết lập Marker tại hà Nội
+            .addTo(map);
 
     </script>
-   
-    
 }

@@ -32,10 +32,10 @@
                             </div>
                         </div>
                         <div class="col-sm-5 text-right">
-                            <p class="price-book">
-                                <span>@Model.rentprice đ</span>/Month
+                            <div class="d-flex justify-content-between">
+                                <p class="price-book price" data-price="@Model.rentprice"></p>
                                 <a href="@Url.Action("AddContact","Client")" title="" class="awe-btn awe-btn-1 awe-btn-lager">Contact Now</a>
-                            </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
                                 <h3 style="width:max-content;">@Model.users.fullname</h3>
                                 <h4 style="width:max-content;">SĐT : @Model.users.phone</h4>
                                 <h4 style="width:max-content; font-size:14px;">Email : @Model.users.email</h4>
-                                <a href="@Url.Action("AddContact","Client")" title="" class="awe-btn awe-btn-1 awe-btn-lager price-book"><b style="font-size:18px;">Contact Now</b></a>
+                                <a href="@Url.Action("AddContact","Client")" title="" class="awe-btn awe-btn-1 awe-btn-lager price-book "><b style="font-size:18px; color:azure;" class="hover_contactnow">Contact Now</b></a>
                             </div>
                             <!-- Vote Text -->
                             <div class="row">
@@ -109,18 +109,18 @@
                                     <hr class="hr">
                                 </div>
                                 <!--<div class="col-xs-6 col-sm-6 col-md-3 col-lg-6 vote-text">
-                            <p><span>95</span>%</p>
-                            <small>Member Recommend</small>
-                            <a href="#" title="">Read 36 Reviews</a>
+                                    <p><span>95</span>%</p>
+                                    <small>Member Recommend</small>
+                                    <a href="#" title="">Read 36 Reviews</a>
 
-                        </div>-->
+                                </div>-->
                                 <!-- End Recommend -->
                                 <!-- Tripadvitsor -->
                                 <!--<div class="col-xs-6 col-sm-6 col-md-3 col-lg-6  vote-text">
-                            <img src="~/Assets/Client/template/images/icon-tripadvitsor.png" alt="">
-                            <small>4.5 Very Good</small>
-                            <a href="#" title="">145 Reviews</a>
-                        </div>-->
+                                    <img src="~/Assets/Client/template/images/icon-tripadvitsor.png" alt="">
+                                    <small>4.5 Very Good</small>
+                                    <a href="#" title="">145 Reviews</a>
+                                </div>-->
                             </div>
                             <!-- End Vote Text -->
 
@@ -247,11 +247,8 @@
                         </div>
                     </div>
                     <div class="col-lg-9 details-policies-cn">
-
-                        <iframe class="position-relative rounded w-100 h-100 "
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd"
-                                frameborder="0" style="min-height: 600px; width:800px; border:0;" allowfullscreen="" aria-hidden="false"
-                                tabindex="0"></iframe>
+                      
+                        <div id='map' style="min-height: 600px; width:800px; border:0;"></div>
 
                     </div>
                 </div>
@@ -262,6 +259,61 @@
                     <div class="col-lg-9 detail-footer-cn"></div>
                 </div>
             </section>
+
+            @*<section class="details-policies detail-cn" id="details-policies">
+                    <div class="row">
+                        <div class="col-lg-3 detail-sidebar">
+                            <div class="scroll-heading">
+                                <h2>Share</h2>
+                                <hr class="hr">
+                            </div>
+                        </div>
+                        <div class="col-lg-9 details-policies-cn">
+
+
+                        </div>
+                    </div>
+                </section>*@
+
+            <section class="detail-footer detail-cn">
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-9 detail-footer-cn"></div>
+                </div>
+            </section>
+
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            debugger;
+            let dollarUSLocale = Intl.NumberFormat('en-US');
+            var getPrice = $('.price').attr('data-price');
+            var price = dollarUSLocale.format(getPrice);
+            var str = `$<span>${price}</span>/Month`;
+            $('.price').html(str);
+        });
+
+
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoiaGFpZGFuZzA4MDUiLCJhIjoiY2wxdDJmbzZ5MXRhbDNkcGRpbXpnaDR5OCJ9.GVs3_jJ9ZtPvSRwGDvVLJg';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [ @Model.map],
+            zoom: 9
+        });
+
+        var marker = new mapboxgl.Marker({
+            color: "red", //Màu của Marker là đỏ
+            draggable: true,
+            anchor: 'bottom', //Nhãn Hà Nội nằm dưới Marker
+        }).setLngLat([ @Model.map]) //Thiết lập Marker tại hà Nội
+            .addTo(map);
+
+    </script>
+}
+
