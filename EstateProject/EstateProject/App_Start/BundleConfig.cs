@@ -20,7 +20,9 @@ namespace EstateProject
                     "~/Assets/Admin/paging/jquery.twbsPagination.min.js"
 
                     ));
-
+            bundles.Add(new StyleBundle("~/css/error").Include(
+                     "~/Assets/Error/style.css"
+                     ));
             bundles.Add(new ScriptBundle("~/js/plugins").Include(
                   "~/Assets/Admin/js/jquery.validate.min.js",
                   "~/Assets/Admin/js/global_admin_script.js",

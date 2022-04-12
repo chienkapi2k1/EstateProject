@@ -15,6 +15,7 @@ using System.Web.Mvc;
 
 namespace EstateProject.Controllers
 {
+    [HandleError]
     public class BuildingController : BaseController
     {
         EstateDbContext db = new EstateDbContext();

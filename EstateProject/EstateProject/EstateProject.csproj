@@ -159,6 +159,7 @@
     <Compile Include="Controllers\Admin\BuildingController.cs" />
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Client\ClientController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Dao\BuildingDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Dto\BuildingDto.cs" />
@@ -551,6 +552,8 @@
     <Content Include="Assets\Client\template\js\library\SmoothScroll.js" />
     <Content Include="Assets\Client\template\js\script.js" />
     <Content Include="Assets\Client\template\css\style.css" />
+    <Content Include="Assets\Error\bg.jpg" />
+    <Content Include="Assets\Error\style.css" />
     <Content Include="Assets\login\css\main.css" />
     <Content Include="Assets\login\css\util.css" />
     <Content Include="Assets\login\fonts\font-awesome-4.7.0\css\font-awesome.css" />
@@ -834,6 +837,9 @@
     <Content Include="Views\Shared\_LayoutBuildingDetail.cshtml" />
     <Content Include="Views\Client\BuildingDetail1.cshtml" />
     <Content Include="Views\Client\AddContact.cshtml" />
+    <Content Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\Error\Forbidden.cshtml" />
+    <Content Include="Views\Error\ServerError.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

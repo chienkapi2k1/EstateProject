@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace EstateProject.Controllers.Admin
 {
+    [HandleError]
     public class ContactController : BaseController
     {
         EstateDbContext dbContext = new EstateDbContext();
@@ -35,7 +36,7 @@ namespace EstateProject.Controllers.Admin
                                 messages = a.messages,
                                 status = a.status,
                                 user_name = b.fullname,
-                            }).OrderBy(c => c.status);
+                            }).OrderByDescending(c => c.id ).OrderBy(c => c.status);
                 if (Session["Role"].ToString() != "ADMIN")
                 {
                     data = (from a in contacts
@@ -51,7 +52,7 @@ namespace EstateProject.Controllers.Admin
                                 messages = a.messages,
                                 status = a.status,
                                 user_name = b.fullname,
-                            }).OrderBy(c => c.status);
+                            }).OrderByDescending(c => c.id).OrderBy(c => c.status );
                 }
 
                 List<ListContact> listContact = new List<ListContact>();

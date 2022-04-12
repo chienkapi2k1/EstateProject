@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace EstateProject.Controllers.Client
 {
+    //[HandleError]
     public class ClientController : Controller
     {
         EstateDbContext db = new EstateDbContext();

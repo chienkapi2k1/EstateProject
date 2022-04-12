@@ -11,6 +11,7 @@ using EstateProject.Models;
 
 namespace EstateProject.Controllers
 {
+    [HandleError]
     public class UserController : BaseController
     {    
         [HttpGet]

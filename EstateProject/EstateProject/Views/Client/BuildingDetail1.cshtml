@@ -1,7 +1,7 @@
 ﻿@using EstateProject.Models;
 @model building
 @{
-    ViewBag.Title = "BuildingDetail2";
+    ViewBag.Title = "Building Detail";
     Layout = "~/Views/Shared/_LayoutBuildingDetail.cshtml";
 }
 
@@ -94,6 +94,7 @@
 
                             <h2 style="font-size:35px">Contact broker</h2>
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 vote-text">
+                                
                                 <img style="height: 250px; width: auto; " src="@Url.Content(@Model.users.image)" alt="">
                                 <h3 style="width:max-content;">@Model.users.fullname</h3>
                                 <h4 style="width:max-content;">SĐT : @Model.users.phone</h4>

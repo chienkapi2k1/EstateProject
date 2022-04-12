@@ -241,8 +241,10 @@
                         </li>
                     </ul>
                 </li>*@
-                <li class="">
-                    @{
+            <li class="">
+                @{
+                    if (Session["Role"] != null)
+                    {
                         if (Session["Role"].ToString() == "ADMIN")
                         {
                             <a href="#" class="dropdown-toggle">
@@ -253,17 +255,19 @@
                         }
                     }
 
-                    <b class="arrow"></b>
-                    <ul class="submenu">
-                        <li class="">
-                            <a href="@Url.Action("ListUser", "User")">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                DS tài khoản
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-                    </ul>
-                </li>
+                }
+
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="@Url.Action("ListUser", "User")">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            DS tài khoản
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
                 <li class="">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fas fa-user"></i>

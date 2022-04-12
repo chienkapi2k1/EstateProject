@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace EstateProject.Controllers.Admin
 {
+    [HandleError]
     public class LoginController : Controller
     {
         public string USER_SESSION { get; private set; }
