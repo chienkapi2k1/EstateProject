@@ -108,12 +108,14 @@ namespace EstateProject.Models
 
         public int? user_id { get; set; }
 
+        public int status { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rentarea> rentarea { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<building_images> building_images { get; set; }
 
-        public virtual user users { get; set; }
+        public virtual users users { get; set; }
     }
 }

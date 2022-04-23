@@ -8,7 +8,7 @@ namespace EstateProject.Models
     public partial class EstateDbContext : DbContext
     {
         public EstateDbContext()
-            : base("name=EstateDBContext")
+            : base("name=Model11")
         {
         }
 
@@ -17,7 +17,7 @@ namespace EstateProject.Models
         public virtual DbSet<contacts> contacts { get; set; }
         public virtual DbSet<rentarea> rentarea { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<user> user { get; set; }
+        public virtual DbSet<users> users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -166,48 +166,48 @@ namespace EstateProject.Models
                 .Property(e => e.modifiedby)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<user>()
+            modelBuilder.Entity<users>()
                 .Property(e => e.username)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<user>()
+            modelBuilder.Entity<users>()
                 .Property(e => e.password)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<user>()
+            modelBuilder.Entity<users>()
                 .Property(e => e.fullname)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<user>()
+            modelBuilder.Entity<users>()
                 .Property(e => e.phone)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<user>()
+            modelBuilder.Entity<users>()
                 .Property(e => e.email)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<user>()
+            modelBuilder.Entity<users>()
                 .Property(e => e.role)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<user>()
+            modelBuilder.Entity<users>()
                 .Property(e => e.createdby)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<user>()
+            modelBuilder.Entity<users>()
                 .Property(e => e.modifiedby)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<user>()
+            modelBuilder.Entity<users>()
                 .Property(e => e.image)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<user>()
+            modelBuilder.Entity<users>()
                 .HasMany(e => e.building)
                 .WithOptional(e => e.users)
                 .HasForeignKey(e => e.user_id);
 
-            modelBuilder.Entity<user>()
+            modelBuilder.Entity<users>()
                 .HasMany(e => e.contacts)
                 .WithOptional(e => e.users)
                 .HasForeignKey(e => e.user_id);

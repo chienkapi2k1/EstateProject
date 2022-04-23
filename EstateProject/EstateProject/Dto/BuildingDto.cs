@@ -136,6 +136,6 @@ namespace EstateProject.Dto
         public int totalPage { get; set; }
         public int totalItems { get; set; }
 
-
+        public int status { get; set; }
     }
 }

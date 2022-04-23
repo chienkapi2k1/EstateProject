@@ -171,15 +171,15 @@
     <Compile Include="Models\building_images.cs" />
     <Compile Include="Models\contacts.cs" />
     <Compile Include="Models\District.cs" />
-    <Compile Include="Models\EstateDbContext.cs" />
     <Compile Include="Models\ListContact.cs" />
     <Compile Include="Models\Metadata\contacts.Metadata.cs" />
+    <Compile Include="Models\EstateDbContext.cs" />
+    <Compile Include="Models\rentarea.cs" />
     <Compile Include="Models\SendEmail.cs" />
     <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\rentarea.cs" />
-    <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Models\PasswordModel.cs" />
-    <Compile Include="Models\user.cs" />
+    <Compile Include="Models\sysdiagrams.cs" />
+    <Compile Include="Models\users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -859,7 +859,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61760</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44364/</IISUrl>
+          <IISUrl>http://localhost:44364/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

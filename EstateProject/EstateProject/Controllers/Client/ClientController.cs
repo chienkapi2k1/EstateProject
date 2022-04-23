@@ -15,7 +15,7 @@ namespace EstateProject.Controllers.Client
         // GET: Client
         public ActionResult Index(string name, string district)
         {
-            List<building> lstBuilding = db.building.Where(n => n.levels == "1").OrderBy(n => n.name).ToList();
+            List<building> lstBuilding = db.building.Where(n => n.levels == "1" && n.status != 2).OrderBy(n => n.name).ToList();
             if (lstBuilding.Count == 0)
             {
                 Response.StatusCode = 404;
@@ -41,14 +41,14 @@ namespace EstateProject.Controllers.Client
                     district = "";
                 }
                 TempData["District"] = district.Trim();
-                lstBuilding = lstBuilding.Where(x => x.levels == "1" && x.name.Contains(name) && x.district.Contains(district)).ToList();
+                lstBuilding = lstBuilding.Where(x => x.levels == "1" && x.status != 2 && x.name.Contains(name) && x.district.Contains(district)).ToList();
             }
             return View(lstBuilding);
         }
 
         public ActionResult AllBuilding(string name, string district)
         {
-            List<building> lstBuilding = db.building.OrderBy(n => n.name).ToList();
+            List<building> lstBuilding = db.building.Where(n=>n.status!=2).OrderBy(n => n.name).ToList();
             if (lstBuilding.Count == 0)
             {
                 Response.StatusCode = 404;
@@ -73,7 +73,7 @@ namespace EstateProject.Controllers.Client
                     district = "";
                 }
                 TempData["District"] = district.Trim();
-                lstBuilding = lstBuilding.Where(x => x.name.Contains(name) && x.district.Contains(district)).ToList();
+                lstBuilding = lstBuilding.Where(x => x.name.Contains(name) && x.status!= 2 && x.district.Contains(district)).ToList();
             }
             return View(lstBuilding);
             
@@ -98,7 +98,7 @@ namespace EstateProject.Controllers.Client
         [HttpGet]
         public ActionResult AddContact()
         {
-            List<user> user = db.user.Where(n => n.role == "STAFF").ToList();
+            List<users> user = db.users.Where(n => n.role == "STAFF").ToList();
             ViewBag.user = user;
             //ViewBag.user_id = new SelectList(db.user.Where(n => n.role == "STAFF").ToList(), "id", "fullname");
             return View();
@@ -115,7 +115,7 @@ namespace EstateProject.Controllers.Client
                 db.SaveChanges();
                 return RedirectToAction("AddContact");
             }
-            List<user> user = db.user.Where(n => n.role == "STAFF").ToList();
+            List<users> user = db.users.Where(n => n.role == "STAFF").ToList();
             ViewBag.user = user;
             //ViewBag.user_id = new SelectList(db.user.Where(n => n.role == "STAFF").ToList(), "id", "fullname"); //
             return View();

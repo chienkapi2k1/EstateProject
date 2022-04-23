@@ -40,6 +40,7 @@ namespace EstateProject.Common
             building.map = dto.map;
             building.user_id = dto.UserId;
             building.avatar = dto.avatar;
+            building.status = dto.status;
             return building;
         }
 
@@ -80,7 +81,8 @@ namespace EstateProject.Common
             {
                 building.buildingTypes = entity.typess.Split(',');
             }
-            
+            building.status = entity.status;
+
 
             return building;
         }

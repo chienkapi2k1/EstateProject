@@ -33,6 +33,6 @@ namespace EstateProject.Models
 
         public DateTime? modifieddate { get; set; }
 
-        public virtual user users { get; set; }
+        public virtual users users { get; set; }
     }
 }

@@ -18,25 +18,25 @@ namespace EstateProject.Dao
             dbContext = new EstateDbContext();
         }
 
-        public long Insert(user entity)
+        public long Insert(users entity)
         {
             
-            var checkusername = dbContext.user.SingleOrDefault(x => x.username == entity.username);
+            var checkusername = dbContext.users.SingleOrDefault(x => x.username == entity.username);
 
             if (checkusername != null)
                 return 0;
-            dbContext.user.Add(entity);
+            dbContext.users.Add(entity);
             dbContext.SaveChanges();
             return 1;
         }
-        public void Update(user entity, string newPassword)
+        public void Update(users entity, string newPassword)
         {
             //dbContext.users.Update(entity);
             entity.password = Encrytor.MD5Hash(newPassword);
             dbContext.SaveChanges();
         }
 
-        public void UpdateProfile(user entity, string fullname,string email,string phone, string path)
+        public void UpdateProfile(users entity, string fullname,string email,string phone, string path)
         {
             //dbContext.users.Update(entity);
             entity.fullname = fullname;
@@ -51,15 +51,15 @@ namespace EstateProject.Dao
             dbContext.SaveChanges();
         }
 
-        public user GetById(String userName)
+        public users GetById(String userName)
         {
-            return dbContext.user.SingleOrDefault(x => x.username == userName);
+            return dbContext.users.SingleOrDefault(x => x.username == userName);
         }
-        public user FindById(int? id)
+        public users FindById(int? id)
         {
-            return dbContext.user.SingleOrDefault(x => x.id == id);
+            return dbContext.users.SingleOrDefault(x => x.id == id);
         }
-        public List<user> findByRoleAndStatus(string role , int status)
+        public List<users> findByRoleAndStatus(string role , int status)
         {
             StringBuilder sql = new StringBuilder("select * from users as u  where 1 = 1  ");
 
@@ -68,14 +68,14 @@ namespace EstateProject.Dao
                 sql.Append(" and u.role ='" + role + "'");
             }
             sql.Append(" and u.status = " + status);
-            var model = dbContext.user.SqlQuery(sql.ToString()).ToList();
+            var model = dbContext.users.SqlQuery(sql.ToString()).ToList();
             return model;
 
         }
 
         public int login(String userName, String passWord)
         {
-            var result = dbContext.user.SingleOrDefault(x => x.username == userName );
+            var result = dbContext.users.SingleOrDefault(x => x.username == userName );
             if (result == null)
             {
                 return 0;
@@ -100,22 +100,22 @@ namespace EstateProject.Dao
             }
 
         }
-        public List<user> GetUser(string search)
+        public List<users> GetUser(string search)
         {
             if(search != null)
             {
                 search = search.Trim();
-                return dbContext.user.Where(x => x.username.Contains(search)).ToList();
+                return dbContext.users.Where(x => x.username.Contains(search)).ToList();
             }
-            return dbContext.user.Select(x => x).ToList();
+            return dbContext.users.Select(x => x).ToList();
         } 
 
         public bool DeleteUser(int id)
         {
-            var d = dbContext.user.FirstOrDefault(x => x.id == id);
+            var d = dbContext.users.FirstOrDefault(x => x.id == id);
             if (d != null)
             {
-                dbContext.user.Remove(d);
+                dbContext.users.Remove(d);
                 dbContext.SaveChanges();
                 return true;
             }

@@ -21,7 +21,7 @@ namespace EstateProject.Controllers.Admin
             if (Session["Role"] != null)
             {
                 var dao = new UserDao();
-                var users = dbContext.user.Select(x => x).ToList();
+                var users = dbContext.users.Select(x => x).ToList();
                 var contacts = dbContext.contacts.Select(x => x).ToList();
                 int id = int.Parse(Session["UserId"].ToString());
                 var data = (from a in contacts

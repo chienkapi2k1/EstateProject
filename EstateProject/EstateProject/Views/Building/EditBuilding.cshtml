@@ -192,16 +192,16 @@
                         </div>
                     </div>
                     @*@{
-        if (Session["Role"].ToString() == "ADMIN")
-        {*@
+                        if (Session["Role"].ToString() == "ADMIN")
+                        {*@
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Nhân viên quản lý :</label>
                         <div class="col-sm-3" style="margin-bottom: 10px;">
-                            @Html.DropDownListFor(m => m.UserId, (SelectList)ViewBag.UserID, "-- Chọn nhân viên --")
+                            @Html.DropDownListFor(m => m.UserId, null, "-- Chọn nhân viên --")
                         </div>
                     </div>
                     @*}
-        }*@
+                        }*@
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right"> Loại tòa nhà :</label>
@@ -243,12 +243,30 @@
                         <label class="col-sm-3 control-label no-padding-right" for="map">Map  :</label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="map" name="map" value="@Model.map" />
+                            <button type="button" id="setText" style=" float: left; margin:0 20px 20px 0;"> Lấy Tọa Độ </button>
+                            <div class="spinner-grow" role="status" style=" display: none; float:left; ">
+                                <span style="color: red">Loading...</span>
+                                <img src="//s.svgbox.net/loaders.svg?fill=maroon&ic=tail-spin" style="width:30px; height:30px;" />
+                            </div>
+                            <div id="mapbox" style="width:740px; height:400px; margin-bottom:15px;"></div>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="note">Ghi chú :</label>
                         <div class="col-sm-7">
                             <textarea id="note" name="note" rows="4" cols="99"></textarea>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="note">Trạng thái :</label>
+                        <div class="col-sm-7">
+                            <select id="status" name="status">
+                                <option value="0">Cần tìm ngừoi cho thuê</option>
+                                <option value="1">Đã có ngừoi thuê</option>
+                                <option value="2">Không rao thuê</option>
+                            </select>
 
                         </div>
                     </div>
@@ -260,7 +278,7 @@
                         </div>
                         <div class="col-sm-5">
                             @{
-                                var baseurl = Request.Url.Scheme + "://" + Request.Url.Host + ":" + Request.Url.Port + Url.Content("~/Assets/Upload/Building/");
+                                var baseurl = Request.Url.Scheme + "://" + Request.Url.Host + ":" + Request.Url.Port + Url.Content("~/Assets/Client/img/");
                                 var imageSrc = "";
                                 if (Model.avatar != null)
                                 {
@@ -283,7 +301,7 @@
                         </div>
                         <div class="col-sm-6" id="muttipleUploadFile">
                             @{
-                                var baseUrl = Request.Url.Scheme + "://" + Request.Url.Host + ":" + Request.Url.Port + Url.Content("~/Assets/Upload/Building/");
+                                var baseUrl = Request.Url.Scheme + "://" + Request.Url.Host + ":" + Request.Url.Port + Url.Content("~/Assets/Client/img/");
                                 var urlImages = "";
                                 if (Model.buildingImages != null)
                                 {
@@ -347,20 +365,111 @@
 
 
 @section scripts {
+
+    <script type="text/javascript">
+        //map
+
+
+        $(document).ready(function () {
+            debugger
+            //let editor = '';
+            //editor = CKEDITOR.replace('note');
+            if (@Model.id != 0) {
+
+                if ("@Model.map" != "") {
+                    var stringMap = "@Model.map";
+                    var map = stringMap.trim();
+                    var arr = map.split(",");
+                    setMarker(arr[0],arr[1]);
+                }
+            }
+
+
+            $("#setText").click(function () {
+                var addressS = $('#name').val() + ' ' + $('#street').val() + ' ' + $('#ward').val() + ' ' + $('#district').val() + ', Ha Noi, Viet Nam';
+                GetToaDo1(addressS);
+            });
+
+            function GetToaDo1(addressS) {
+                $.ajax({
+                    url: 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + addressS + '.json?access_token=pk.eyJ1IjoiY2hpZW5rYXBpMjAwMSIsImEiOiJjbDFoZmZlOXAwOTNtM2ltajB3OXJpaGZqIn0.XH2DMlx8kvMJURBy2LlJZQ',
+                    method: 'GET',
+
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $('.spinner-grow').show();
+                    },
+                    error: function (response) {
+                        alert("Lỗi không lấy được tọa độ");
+                    },
+                    success: function (response) {
+
+                        console.log(response)
+                        const len = response.length;
+                        const longitude = response.features[0].center[0];
+                        const latitude = response.features[0].center[1];
+                        var str = longitude + "," + latitude;
+
+                        $('#map').val(str);
+
+                        setMarker(longitude, latitude)
+
+                    },
+                    complete: function () {
+
+                        $('.spinner-grow').hide();
+
+                    },
+                    fail: function (response) { }
+                });
+            }
+
+            function setMarker(h,w) {
+                //console.log("height " + h)
+                //console.log("width" + w)
+                 mapboxgl.accessToken = 'pk.eyJ1IjoiY2hpZW5rYXBpMjAwMSIsImEiOiJjbDFoZmZlOXAwOTNtM2ltajB3OXJpaGZqIn0.XH2DMlx8kvMJURBy2LlJZQ';
+
+               const map = new mapboxgl.Map({
+                container: 'mapbox',
+                   style: 'mapbox://styles/mapbox/streets-v11',
+                   center: [h,w],
+                zoom: 11
+                });
+
+               var marker = new mapboxgl.Marker({
+                    color: "red", //Màu của Marker là đỏ
+                    draggable: true,
+                    anchor: 'bottom', //Nhãn Hà Nội nằm dưới Marker
+               }).setLngLat([h, w]) //Thiết lập Marker tại hà Nội
+                    .addTo(map);
+
+                map.addControl(new mapboxgl.NavigationControl({
+                    showCompass: true,
+                    showZoom: true,
+                }));
+
+                map.addControl(new mapboxgl.GeolocateControl({
+                    positionOptions: {
+                        enableHighAccuracy: true
+                    },
+                    trackUserLocation: true
+                }));
+            }
+
+        });
+
+
+
+
+
+
+    </script>
+
     <script type="text/javascript">
 
-        let editor = '';
-        $(document).ready(function () {
-            editor = CKEDITOR.replace('note');
-        })
-
-    
         var oldFileNameBuilding = '@Model.avatar';
 
         var images = [];
-
-
-
 
         function image_select() {
             dataMultiple = new FormData()
@@ -615,7 +724,6 @@
             });
 
         }
-
 
     </script>
 }

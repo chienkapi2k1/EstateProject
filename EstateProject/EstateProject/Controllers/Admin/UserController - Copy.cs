@@ -117,7 +117,7 @@ namespace EstateProject.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult EditUser(user user)
+        public ActionResult EditUser(users user)
         {
             if (Session["Role"] != null)
             {

@@ -180,7 +180,7 @@
 
 @section scripts {
 
-    <script>
+    <script type="text/javascript">
         mapboxgl.accessToken = 'pk.eyJ1IjoiaGFpZGFuZzA4MDUiLCJhIjoiY2wxdDJmbzZ5MXRhbDNkcGRpbXpnaDR5OCJ9.GVs3_jJ9ZtPvSRwGDvVLJg';
         const map = new mapboxgl.Map({
             container: 'map',
@@ -195,6 +195,16 @@
             anchor: 'bottom', //Nhãn Hà Nội nằm dưới Marker
         }).setLngLat([@Model.map]) //Thiết lập Marker tại hà Nội
             .addTo(map);
+        map.addControl(new mapboxgl.NavigationControl({
+            showCompass: true,
+            showZoom: true,
+        }));
 
+        map.addControl(new mapboxgl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            trackUserLocation: true
+        }));
     </script>
 }

@@ -61,9 +61,6 @@ namespace EstateProject.Controllers
 
         public ActionResult EditBuilding(int? id )
         {
-             
-                
-                
                 if (id == null)
                 {
                     SetViewBag();
